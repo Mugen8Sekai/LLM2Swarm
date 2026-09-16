@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {"type":"string","enum":["proposal","clarification","unsupported"]},
+    "message": {"type":"string","minLength":1,"maxLength":1000},
+    "mission": {"anyOf":[
+      {"type":"null"},
+      {"type":"object","properties":{
+        "requiredFindings":{"type":"integer","minimum":1,"maximum":10000},
+        "maxSeconds":{"type":"number","exclusiveMinimum":0,"maximum":86400},
+        "areas":{"type":"array","minItems":1,"maxItems":3,"items":{"type":"string","enum":["all","north","center","south"]}}
+      },"required":["requiredFindings","maxSeconds","areas"],"additionalProperties":false}
+    ]}
+  },
+  "required":["status","message","mission"],
+  "additionalProperties":false
+}
