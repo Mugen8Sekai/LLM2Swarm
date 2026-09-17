@@ -37,7 +37,7 @@ namespace LLM2Swarm
         readonly object pendingLock=new object();
         readonly Texture2D[] cameras=new Texture2D[3];
         readonly long[] loadedCameraTicks=new long[3];
-        Snapshot snapshot; ReadResult pending; Task readTask; double nextRead; string runtimeRoot,status="Esperando MissionHost…",sourceDirectory;
+        Snapshot snapshot; ReadResult pending; Task readTask; double nextRead; string runtimeRoot,status="Esperando MissionHost…",sourceDirectory,controlStatus="";
         GUIStyle titleStyle,sectionStyle,textStyle,smallStyle;
 
         void Awake()
@@ -120,6 +120,21 @@ namespace LLM2Swarm
             catch(Exception e){status=e.Message;}
         }
 
+        bool IsActiveRun()
+        {
+            try{var match=System.Text.RegularExpressions.Regex.Match(File.ReadAllText(Path.Combine(runtimeRoot,"mission-control-launch.json")),"\"pid\"\\s*:\\s*(\\d+)");if(!match.Success)return false;var process=System.Diagnostics.Process.GetProcessById(int.Parse(match.Groups[1].Value));return !process.HasExited;}
+            catch{return false;}
+        }
+        void RequestControl(string action)
+        {
+            try
+            {
+                string root=Directory.GetParent(Application.dataPath).FullName,script=Path.Combine(root,"Integrations","Px4","MissionControlControl.ps1");
+                if(!File.Exists(script))throw new FileNotFoundException("No se encontró el supervisor local",script);
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("powershell.exe",$"-NoProfile -ExecutionPolicy Bypass -File \"{script}\" -Action {action}"){UseShellExecute=false,CreateNoWindow=true});controlStatus=action=="start"?"Solicitud de inicio enviada al supervisor local":"Abort solicitado; MissionHost aterrizará los UAV";
+            }
+            catch(Exception e){controlStatus=e.Message;}
+        }
         void OnDestroy(){foreach(var texture in cameras) if(texture!=null) Destroy(texture);}
         static void Box(Rect rect,Color color){GUI.color=color;GUI.DrawTexture(rect,Texture2D.whiteTexture);GUI.color=Color.white;}
         void EnsureStyles()
@@ -139,9 +154,13 @@ namespace LLM2Swarm
             Box(new Rect(0,0,width,height),new Color(.035f,.05f,.08f));
             GUI.Label(new Rect(22,14,width-44,34),"LLM2Swarm  /  Mission Control PX4",titleStyle);
             GUI.Label(new Rect(22,50,width-44,22),status,smallStyle);
-            if(snapshot==null){GUI.Label(new Rect(22,100,width-44,40),"Esperando el primer MissionSnapshot…",sectionStyle);GUI.matrix=old;return;}
-            float right=Mathf.Clamp(width*.34f,390,520); var mapPanel=new Rect(20,82,width-right-52,height-104);
-            var cameraPanel=new Rect(mapPanel.xMax+12,82,right,height-104);
+            bool active=IsActiveRun();
+            if(GUI.Button(new Rect(22,74,112,30),"Start PX4"))RequestControl("start");
+            GUI.enabled=active;if(GUI.Button(new Rect(142,74,112,30),"Abort PX4"))RequestControl("abort");GUI.enabled=true;
+            GUI.Label(new Rect(264,80,width-286,22),active?"Misión activa · "+controlStatus:controlStatus,smallStyle);
+            if(snapshot==null){GUI.Label(new Rect(22,132,width-44,40),"Esperando el primer MissionSnapshot…",sectionStyle);GUI.matrix=old;return;}
+            float right=Mathf.Clamp(width*.34f,390,520); var mapPanel=new Rect(20,114,width-right-52,height-136);
+            var cameraPanel=new Rect(mapPanel.xMax+12,114,right,height-136);
             Box(mapPanel,new Color(.065f,.085f,.12f));Box(cameraPanel,new Color(.065f,.085f,.12f));
             GUI.Label(new Rect(mapPanel.x+14,mapPanel.y+10,mapPanel.width-28,24),"MINIMAPA · TELEMETRÍA REAL",sectionStyle);
             GUI.Label(new Rect(mapPanel.x+14,mapPanel.y+36,mapPanel.width-28,42),

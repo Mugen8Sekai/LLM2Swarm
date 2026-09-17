@@ -29,6 +29,7 @@ public sealed class MissionHost
             while(true)
             {
                 if(frame.runId!=runId||frame.error!=null||frame.clockAge>2||frame.vehicles.Length!=3)throw new IOException("Invalid bridge frame: "+frame.error);
+                if(File.Exists(Path.Combine(output,"abort.request"))){reason="aborted";Record(new{type="abort-requested",seconds=Math.Max(0,frame.simTime-start)});break;}
                 var vehicles=frame.vehicles.OrderBy(v=>v.id).ToArray();
                 if(!vehicles.Select(v=>v.id).SequenceEqual(new[]{0,1,2})||vehicles.Any(v=>v.sysId!=v.id+1||v.ageWall>2||!v.connected||v.error!=null))throw new IOException("Stale or invalid vehicle telemetry");
                 double time=frame.simTime-start;
