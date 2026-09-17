@@ -28,7 +28,7 @@ $process=Start-Process wsl.exe -ArgumentList $arguments -PassThru -WindowStyle H
 $processHandle=$process.Handle
 try {
     if($Mode -eq 'slice') {
-        $deadline=[DateTime]::UtcNow.AddSeconds(150)
+        $deadline=[DateTime]::UtcNow.AddSeconds(300)
         while(!(Test-Path "$runPath/session.json")) {
             if($process.HasExited){throw "Bridge exited; inspect $runPath/bridge.stderr.log"}
             if([DateTime]::UtcNow -gt $deadline){throw 'Bridge startup timeout'}
@@ -37,7 +37,7 @@ try {
         & $dotnetPath run --no-build --project "$PSScriptRoot/Host" -- run "$runPath/session.json" "$runPath"
         if($LASTEXITCODE -ne 0){throw 'Mission host failed'}
     }
-    if(!$process.WaitForExit(240000)){throw 'Supervisor timeout'}
+    if(!$process.WaitForExit(600000)){throw 'Supervisor timeout'}
     $nativeExit=$process.ExitCode
     @{exitCode=$nativeExit;hasExited=$process.HasExited} | ConvertTo-Json | Set-Content "$runPath/launcher-result.json"
     if($null -eq $nativeExit -or $nativeExit -ne 0){throw "Bridge exit [$nativeExit]; inspect $runPath/bridge.stderr.log"}

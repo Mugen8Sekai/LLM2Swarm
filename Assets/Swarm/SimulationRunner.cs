@@ -30,7 +30,6 @@ namespace LLM2Swarm
         [Tooltip("Optional manually configured mission JSON")]
         public TextAsset missionJson;
         readonly Color[] colors = { new Color(.2f,.8f,1), new Color(1,.7f,.2f), new Color(.9f,.4f,.8f) };
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Bootstrap()
         {
             if (SceneManager.GetActiveScene().name == "SampleScene" && FindAnyObjectByType<SimulationRunner>() == null)

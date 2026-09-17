@@ -11,9 +11,17 @@ public sealed class MissionHost
     {
         var scenario=Scenario();var intent=Intent();var config=new SearchConfig();var ledger=new TelemetryLedger(scenario,intent);
         var strategy=new SystematicStrategy(false);var completed=new bool[24];var assignments=new[]{-1,-1,-1};var active=new WaypointTask[3];
-        int sequence=0;double last=-1,nextDecision=0;string reason="aborted",failure=null;bool reset=false;
+        int sequence=0,snapshotSequence=0,snapshotPublishErrors=0;double last=-1,nextDecision=0;string reason="aborted",failure=null;bool reset=false;
         using var log=new StreamWriter(Path.Combine(output,"events.jsonl")){AutoFlush=true};
         void Record(object value)=>log.WriteLine(JsonConvert.SerializeObject(value));
+        void Publish(object value)
+        {
+            string path=Path.Combine(output,"snapshot.json"),temporary=path+".tmp";
+            try{File.WriteAllText(temporary,JsonConvert.SerializeObject(value));File.Move(temporary,path,true);}
+            catch(IOException){snapshotPublishErrors++;TryDelete(temporary);}
+            catch(UnauthorizedAccessException){snapshotPublishErrors++;TryDelete(temporary);}
+        }
+        static void TryDelete(string path){try{File.Delete(path);}catch{}}
         try
         {
             var frame=await backend.Start();double start=frame.simTime;string runId=frame.runId;
@@ -37,9 +45,13 @@ public sealed class MissionHost
                         remainingDistance=new double[3]};
                     for(int d=0;d<3;d++)if(active[d]!=null)
                     {var p=positions[d];foreach(var point in active[d].points.Skip(vehicles[d].waypoint)){observation.remainingDistance[d]+=Point.Distance(p,point);p=point;}}
-                    var snapshot=new{type="telemetry",runId,missionRevision=1,seconds=time,positions,vehicles,metrics,findings=ledger.findings,covered=ledger.covered,assignments,completed};
+                    var routes=active.Select((task,vehicleId)=>new{vehicleId,taskId=task?.taskId,regionId=task?.regionId??-1,
+                        points=task?.points??Array.Empty<Point>()}).ToArray();
+                    var snapshot=new{type="mission-snapshot",schemaVersion=1,sequence=++snapshotSequence,runId,missionRevision=1,
+                        seconds=time,scenario,intent,positions,vehicles,metrics,findings=ledger.findings,covered=ledger.covered,
+                        routes,assignments,completed,completedRegions=completed.Count(x=>x),totalRegions=completed.Length};
                     Record(snapshot);
-                    string snapshotPath=Path.Combine(output,"snapshot.json");File.WriteAllText(snapshotPath+".tmp",JsonConvert.SerializeObject(snapshot));File.Move(snapshotPath+".tmp",snapshotPath,true);
+                    Publish(snapshot);
                     if(metrics.found>=intent.requiredFindings){reason="success";break;}
                     if(time>=intent.maxSeconds){reason="deadline";break;}
                     if(completed.All(x=>x)){reason="exhausted";break;}
@@ -64,7 +76,7 @@ public sealed class MissionHost
         finally
         {
             try{await backend.Land();}catch(Exception e){failure=(failure??"")+" LAND: "+e.Message;reason="aborted";}
-            var report=new{reason,failure,metrics=ledger.Metrics(reason),tasksIssued=sequence,completedRegions=completed.Count(x=>x)};
+            var report=new{reason,failure,metrics=ledger.Metrics(reason),tasksIssued=sequence,completedRegions=completed.Count(x=>x),snapshotPublishErrors};
             File.WriteAllText(Path.Combine(output,"summary.json"),JsonConvert.SerializeObject(report,Formatting.Indented));Console.WriteLine(JsonConvert.SerializeObject(report));
         }
     }

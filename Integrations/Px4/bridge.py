@@ -1,5 +1,5 @@
 """Dedicated SITL supervisor. No training environment dependency; owns only its process groups."""
-import argparse, asyncio, contextlib, fcntl, json, math, os, pathlib, secrets, signal, time
+import argparse, asyncio, contextlib, fcntl, json, math, os, pathlib, secrets, shlex, signal, subprocess, time
 from mavsdk import System
 from mavsdk.offboard import PositionNedYaw
 import mavsdk
@@ -14,10 +14,11 @@ class Bridge:
         self.sim=0.; self.clock_wall=0.; self.error=None; self.started=False; self.done=asyncio.Event(); self.last_request=time.monotonic()
         self.drones=[]; self.states=[]; self.goal_jobs={}; self.last_sequences={}
         (self.path/'supervisor.json').write_text(json.dumps(dict(pid=os.getpid(),runId=self.run)))
+        observer_models=str(pathlib.Path(__file__).with_name('models'))
         self.env=dict(os.environ,HEADLESS='1',GZ_PARTITION='llm2swarm-'+self.run,
-            PX4_SYS_AUTOSTART='4001',PX4_SIM_MODEL='gz_x500',PX4_GZ_WORLD='default',
+            PX4_SYS_AUTOSTART='4010',PX4_SIM_MODEL='gz_x500_mono_cam',PX4_GZ_WORLD='default',
             PX4_GZ_MODELS=str(ROOT/'Tools/simulation/gz/models'),PX4_GZ_WORLDS=str(ROOT/'Tools/simulation/gz/worlds'),
-            GZ_SIM_RESOURCE_PATH=str(ROOT/'Tools/simulation/gz/models')+':'+str(ROOT/'Tools/simulation/gz/worlds'),
+            GZ_SIM_RESOURCE_PATH=observer_models+':'+str(ROOT/'Tools/simulation/gz/models')+':'+str(ROOT/'Tools/simulation/gz/worlds'),
             GZ_SIM_SYSTEM_PLUGIN_PATH=str(BUILD/'src/modules/simulation/gz_plugins'),
             GZ_SIM_SERVER_CONFIG_PATH=str(ROOT/'src/modules/simulation/gz_bridge/server.config'))
     async def spawn(self,name,command,env=None,cwd=None,pipe=False):
@@ -26,6 +27,10 @@ class Bridge:
             stdout=asyncio.subprocess.PIPE if pipe else log,stderr=log)
         self.children.append((p,log,name));return p
     async def launch(self):
+        capture_binary=pathlib.Path('/tmp')/('llm2swarm-camera-'+self.run)
+        capture_source=pathlib.Path(__file__).with_name('camera_capture.cpp')
+        flags=shlex.split(subprocess.check_output(['pkg-config','--cflags','--libs','gz-transport13','gz-msgs10','opencv4'],text=True))
+        subprocess.run(['g++','-O2',str(capture_source),'-o',str(capture_binary),*flags],check=True)
         server=pathlib.Path(mavsdk.__file__).parent/'bin/mavsdk_server'
         for i in range(self.args.vehicles):
             await self.spawn(f'mavsdk-{i}',[server,'-p',50051+i,f'udpin://127.0.0.1:{14540+i}'])
@@ -40,9 +45,12 @@ class Bridge:
                 receivedSim=0,wall=0,armed=False,healthy=False,connected=False,mode='',taskId=None,taskState='idle',origin=None,error=None))
             for stream in (self.position(i),self.heartbeat(i),self.health(i),self.armed(i),self.mode(i),self.connection(i)):
                 self.jobs.append(asyncio.create_task(stream))
+        for i in range(self.args.vehicles):
+            topic=f'/world/default/model/x500_mono_cam_{i}/link/camera_link/sensor/imager/image'
+            await self.spawn(f'camera-{i}',[capture_binary,topic,self.path/f'camera-{i}.jpg','5'])
         clock=await self.spawn('clock',['gz','topic','-e','-t','/world/default/clock','--json-output'],pipe=True)
         self.jobs.append(asyncio.create_task(self.clock(clock)))
-        await self.wait(lambda: self.sim>0 and all(s['healthy'] and s['sysId']==s['id']+1 and s['wall']>0 for s in self.states),100,'ready health/identity/clock')
+        await self.wait(lambda: self.sim>0 and all(s['healthy'] and s['sysId']==s['id']+1 and s['wall']>0 for s in self.states),240,'ready health/identity/clock')
         for i,d in enumerate(self.drones):
             await d.telemetry.set_rate_position_velocity_ned(20)
             await d.param.set_param_float('MPC_XY_CRUISE',4.)
@@ -190,6 +198,8 @@ class Bridge:
         for p,log,_ in self.children:
             with contextlib.suppress(Exception):await p.wait()
             log.close()
+        with contextlib.suppress(FileNotFoundError):
+            (pathlib.Path('/tmp')/('llm2swarm-camera-'+self.run)).unlink()
         (self.path/'cleanup.json').write_text(json.dumps([dict(pid=p.pid,name=name,returncode=p.returncode) for p,_,name in self.children],indent=2))
 
 async def main(args):
@@ -205,7 +215,7 @@ async def main(args):
         else:
             server=await asyncio.start_server(b.handle,'127.0.0.1',args.port)
             (b.path/'session.json').write_text(json.dumps(dict(runId=b.run,port=args.port,token=b.token,pid=os.getpid())))
-            async with server:await asyncio.wait_for(b.done.wait(),300)
+            async with server:await asyncio.wait_for(b.done.wait(),600)
         completed=True
     finally:
         await b.close()

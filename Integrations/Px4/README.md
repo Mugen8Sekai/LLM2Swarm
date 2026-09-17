@@ -14,12 +14,26 @@ versioned waypoint tasks and telemetry with a Python MAVSDK bridge over authenti
 JSON lines on localhost port 8765. Each vehicle has its own MAVSDK server and NED origin.
 PX4 controls attitude, velocity and position; the host does not simulate motion.
 
-The bridge runs one Gazebo world, x500_0/1/2, MAVLink system IDs 1/2/3, UDP destinations
+The bridge runs one Gazebo world, x500_mono_cam_0/1/2, MAVLink system IDs 1/2/3, UDP destinations
 14540/14541/14542 and MAVSDK gRPC ports 50051/50052/50053. Gazebo transport uses a unique
 per-run `GZ_PARTITION`. A lock inside the dedicated distribution prevents concurrent
 supervisors. No ROS 2 node or agent is started by this integration. PX4's standard
 firmware includes its default uXRCE client; there is no DDS agent or ROS dependency in
 the mission path.
+
+Mission Control is a separate read-only Unity component. `MissionHost` atomically
+publishes a versioned `MissionSnapshot` containing measured positions, active routes,
+coverage, detected findings, vehicle state and progress. Unity polls that file on a
+worker thread and never opens the authenticated command channel. The legacy
+`SimulationRunner` remains in the repository but no longer bootstraps `SampleScene`;
+there is no `Simulation.Step()` or local vehicle motion in Mission Control.
+
+Each `x500_mono_cam` keeps the upstream front-camera geometry and inertial values. Its
+visual-only sensor is limited to 640×480 at 5 Hz so rendering cannot starve MAVLink
+heartbeats. A small Gazebo Transport/OpenCV subscriber publishes only the latest JPEG
+for each UAV by atomic rename. Frames are neither recorded nor consumed by the host,
+ledger, observations, strategy or metrics. Missing or stale images affect only the
+corresponding Unity panel.
 
 Map coordinates are metres, x east and y north. For each ground calibration
 `(n0,e0,d0,x0,y0,h0)`, the transform is `N=n0+y-y0, E=e0+x-x0, D=d0-h+h0`.
@@ -67,7 +81,7 @@ recorded supervisor; it never calls global `pkill`, `wsl --shutdown` or kills Un
 
 Artifacts appear under `.runtime/smoke-*` or `.runtime/slice-*`: PX4 ULog and console
 logs, MAVSDK logs, supervisor/cleanup records; the slice additionally writes
-`events.jsonl`, `snapshot.json`, `summary.json`. Session tokens in `session.json`
+`events.jsonl`, `snapshot.json`, `camera-0.jpg` through `camera-2.jpg`, and `summary.json`. Session tokens in `session.json`
 are local runtime data and must not be committed. `events.jsonl` records tasks,
 measured positions, progress, findings and metrics. Raw flight logs are not RL data.
 
@@ -88,10 +102,11 @@ full EKF-origin reset handling, packet replay/reconnection and fault-injection t
 remain technical debt. Frozen metrics are not redefined and PX4 runs must not be
 pooled with the paired RL evaluation.
 
-Unity was not modified or launched. The host snapshot is the read-only Mission Control
-boundary; attaching it to the existing `SimulationRunner` would incorrectly create
-two authorities. A separate read-only Unity view is the next UI increment, not part
-of the flight acceptance test. The snapshot includes detected targets only, never
-undetected target coordinates. This slice supports the fixed uniform scenario only.
+Unity Mission Control consumes the snapshot boundary and latest camera frames only.
+The snapshot includes detected targets only, never undetected target coordinates.
+The accepted decoupling test ran the Unity player at 1 FPS, suspended one camera
+capturer for five seconds, resumed it, and closed Unity while snapshots continued.
+See `MISSION_CONTROL_REPORT.md` and `acceptance-result.json`. This integration still
+supports the fixed uniform scenario only.
 
 See REPORT.md for measured outcomes and the exact installed dependency versions.

@@ -55,7 +55,7 @@ public sealed class BridgeBackend : IExecutionBackend
     {
         var doc=JObject.FromObject(request);doc["token"]=token;
         await writer.WriteLineAsync(doc.ToString(Formatting.None));
-        string line=await reader.ReadLineAsync().WaitAsync(TimeSpan.FromSeconds(150));
+        string line=await reader.ReadLineAsync().WaitAsync(TimeSpan.FromSeconds(300));
         if(line==null)throw new IOException("Bridge disconnected");
         var result=JObject.Parse(line);
         if((bool?)result["ok"]!=true)throw new IOException((string)result["error"]??"Bridge failure");
