@@ -72,7 +72,8 @@ def audit(folder):
     repo=pathlib.Path(__file__).resolve().parents[2]
     sources=['Assets/Swarm/Px4MissionControl.cs','Assets/Swarm/SimulationRunner.cs','Integrations/Px4/camera_capture.cpp',
         'Integrations/Px4/bridge.py','Integrations/Px4/Run.ps1','Integrations/Px4/Host/Contracts.cs','Integrations/Px4/Host/MissionHost.cs',
-        'Integrations/Px4/models/mono_cam/model.sdf','Integrations/Px4/acceptance.py',
+        'Integrations/Px4/models/mono_cam/model.sdf','Integrations/Px4/worlds/default.sdf',
+        'Integrations/Px4/acceptance.py',
         'Integrations/Px4/README.md','Integrations/Px4/MISSION_CONTROL_REPORT.md']
     hashes={name:hashlib.sha256((repo/name).read_bytes()).hexdigest() for name in sources}
     frozen=0

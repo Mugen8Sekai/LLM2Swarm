@@ -14,11 +14,13 @@ class Bridge:
         self.sim=0.; self.clock_wall=0.; self.error=None; self.started=False; self.done=asyncio.Event(); self.last_request=time.monotonic()
         self.drones=[]; self.states=[]; self.goal_jobs={}; self.last_sequences={}
         (self.path/'supervisor.json').write_text(json.dumps(dict(pid=os.getpid(),runId=self.run)))
-        observer_models=str(pathlib.Path(__file__).with_name('models'))
+        observer_root=pathlib.Path(__file__).with_name('models')
+        observer_models=str(observer_root)
+        observer_worlds=str(pathlib.Path(__file__).with_name('worlds'))
         self.env=dict(os.environ,HEADLESS='1',GZ_PARTITION='llm2swarm-'+self.run,
             PX4_SYS_AUTOSTART='4010',PX4_SIM_MODEL='gz_x500_mono_cam',PX4_GZ_WORLD='default',
-            PX4_GZ_MODELS=str(ROOT/'Tools/simulation/gz/models'),PX4_GZ_WORLDS=str(ROOT/'Tools/simulation/gz/worlds'),
-            GZ_SIM_RESOURCE_PATH=observer_models+':'+str(ROOT/'Tools/simulation/gz/models')+':'+str(ROOT/'Tools/simulation/gz/worlds'),
+            PX4_GZ_MODELS=str(ROOT/'Tools/simulation/gz/models'),PX4_GZ_WORLDS=observer_worlds,
+            GZ_SIM_RESOURCE_PATH=observer_models+':'+observer_worlds+':'+str(ROOT/'Tools/simulation/gz/models')+':'+str(ROOT/'Tools/simulation/gz/worlds'),
             GZ_SIM_SYSTEM_PLUGIN_PATH=str(BUILD/'src/modules/simulation/gz_plugins'),
             GZ_SIM_SERVER_CONFIG_PATH=str(ROOT/'src/modules/simulation/gz_bridge/server.config'))
     async def spawn(self,name,command,env=None,cwd=None,pipe=False):
