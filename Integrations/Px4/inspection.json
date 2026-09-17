@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-17",
+  "status": "design-awaiting-architecture-and-installation-approval",
+  "rlFrozenChecks": {"phase3Manifest": 7, "phase4Manifest": 18, "mismatches": 0},
+  "wsl": {
+    "Ubuntu": {"version": 2, "initialState": "Stopped", "os": "Ubuntu 26.04.1 LTS", "python": "3.14", "gitFound": true, "cmakeFound": false, "gzFound": false, "px4Found": false, "warning": "systemd user session failed to start during initial query"},
+    "OpenClawGateway": {"version": 2, "initialState": "Running", "inspectedInternally": false, "modified": false}
+  },
+  "checkoutSearch": {"roots": ["/home", "/opt"], "maxDepth": 4, "name": "PX4-Autopilot", "matches": 0},
+  "proposedNotInstalled": {"os": "dedicated Ubuntu 24.04 WSL2", "px4": "v1.17.0", "gazebo": "Harmonic / gz-sim 8", "mavsdkPython": "3.17.2", "python": "3.12"},
+  "processesStarted": {"px4": 0, "gazebo": 0, "unity": 0},
+  "dependenciesInstalled": [],
+  "trainingRuns": 0,
+  "benchmarks": 0,
+  "verticalSliceAchieved": false
+}

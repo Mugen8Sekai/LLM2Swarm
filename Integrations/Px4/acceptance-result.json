@@ -1,0 +1,62 @@
+{
+  "accepted": true,
+  "runId": "d8ff1a1a6efa2893",
+  "frames": 1948,
+  "tasksByVehicle": [
+    6,
+    6,
+    6
+  ],
+  "completedByVehicle": [
+    5,
+    5,
+    5
+  ],
+  "reason": "deadline",
+  "metrics": {
+    "finishReason": "deadline",
+    "success": false,
+    "seconds": 120.05199999999999,
+    "coverage": 0.80875,
+    "foundFraction": 0.9166666666666666,
+    "totalDistance": 599.6693448056196,
+    "exposureAreaSeconds": 9744.600000016022,
+    "redundantAreaSeconds": 9628.064000016373,
+    "firstFindingSeconds": 4.064,
+    "kFindingSeconds": null,
+    "found": 11,
+    "distanceByDrone": [
+      188.29652093099838,
+      203.22008527985548,
+      208.15273859476574
+    ],
+    "newAreaByDrone": [
+      488.0,
+      709.0,
+      744.0
+    ],
+    "findingsByDrone": [
+      2,
+      5,
+      4
+    ]
+  },
+  "artifactDirectory": "Integrations\\Px4\\.runtime\\slice-20260917-142401",
+  "launcher": {
+    "hasExited": true,
+    "exitCode": 0
+  },
+  "supervisor": {
+    "completed": true,
+    "error": null
+  },
+  "frozenHashesVerified": 25,
+  "sourceHashesAtAcceptance": {
+    "Integrations\\Px4\\Host\\Contracts.cs": "0c04e57117462e0d8f61a174326030e797426921477e7ab1034f2f524716e88a",
+    "Integrations\\Px4\\Host\\LocalPlanner.cs": "0f3496b53038d3a66562160f221c391f998f27ebe67a117c2fa76d951f1cc95c",
+    "Integrations\\Px4\\Host\\MissionHost.cs": "8b291d2acbf821da63220818f7b2a95c24b8f35260be0e8ab55efd91677acadb",
+    "Integrations\\Px4\\Host\\Program.cs": "e3333bb7c8f4421695cb88ff4698c81514c4060bb68d9c6c06dfd35d5b0cb7a6",
+    "Integrations\\Px4\\Host\\TelemetryLedger.cs": "60e8d04798f51842c49e562d49d55452e57e26513c673c5b62f10a99c301a624",
+    "Integrations\\Px4\\bridge.py": "ee8f42bc51b08b511de893b35e0eeb37d8e01bcbb1f580d0db0141aec1352edd"
+  }
+}
