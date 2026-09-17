@@ -40,13 +40,6 @@ namespace LLM2Swarm
         Snapshot snapshot; ReadResult pending; Task readTask; double nextRead; string runtimeRoot,status="Esperando MissionHost…",sourceDirectory;
         GUIStyle titleStyle,sectionStyle,textStyle,smallStyle;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        static void Bootstrap()
-        {
-            if(SceneManager.GetActiveScene().name=="SampleScene"&&FindAnyObjectByType<Px4MissionControl>()==null)
-                new GameObject("PX4 Mission Control (read only)").AddComponent<Px4MissionControl>();
-        }
-
         void Awake()
         {
             runtimeRoot=Environment.GetEnvironmentVariable("LLM2SWARM_PX4_RUNTIME");
