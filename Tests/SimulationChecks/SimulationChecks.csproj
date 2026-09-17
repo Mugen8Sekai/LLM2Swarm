@@ -5,6 +5,7 @@
     <Compile Include="../../Assets/Swarm/MissionJson.cs" Link="MissionJson.cs" />
     <Compile Include="../../Assets/Swarm/MissionIntent.cs" Link="MissionIntent.cs" />
     <Compile Include="../../Assets/Swarm/LocalInterpreter.cs" Link="LocalInterpreter.cs" />
+    <Compile Include="../../Assets/Swarm/SearchExperiment.cs" Link="SearchExperiment.cs" />
     <Reference Include="../../Library/PackageCache/com.unity.nuget.newtonsoft-json*/Runtime/Newtonsoft.Json.dll" />
   </ItemGroup>
 </Project>

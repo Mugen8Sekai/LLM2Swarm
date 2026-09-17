@@ -9,8 +9,12 @@ namespace LLM2Swarm
     {
         public int seed = 42, targetCount = 12;
         public float width = 60, height = 40, speed = 4, sensorRadius = 3, cellSize = 1, stepSeconds = .1f;
+        public Point[] starts;
+        public string distribution = "uniform";
+        public int clusters = 3;
+        public float clusterSpread = 4;
         public static Scenario From(Mission m) => new Scenario { seed=m.seed,targetCount=m.targetCount,width=m.width,height=m.height,
-            speed=m.speed,sensorRadius=m.sensorRadius,cellSize=m.cellSize,stepSeconds=m.stepSeconds };
+            speed=m.speed,sensorRadius=m.sensorRadius,cellSize=m.cellSize,stepSeconds=m.stepSeconds,starts=m.starts == null ? null : (Point[])m.starts.Clone(),distribution=m.distribution,clusters=m.clusters,clusterSpread=m.clusterSpread };
     }
     [Serializable] public class MissionIntent
     {
@@ -56,7 +60,8 @@ namespace LLM2Swarm
         {
             intent.Validate();
             var m = new Mission { seed=s.seed,targetCount=s.targetCount,requiredFindings=intent.requiredFindings,width=s.width,height=s.height,
-                speed=s.speed,sensorRadius=s.sensorRadius,cellSize=s.cellSize,stepSeconds=s.stepSeconds,maxSeconds=intent.maxSeconds };
+                speed=s.speed,sensorRadius=s.sensorRadius,cellSize=s.cellSize,stepSeconds=s.stepSeconds,maxSeconds=intent.maxSeconds,
+                starts=s.starts == null ? null : (Point[])s.starts.Clone(),distribution=s.distribution,clusters=s.clusters,clusterSpread=s.clusterSpread };
             // Validate scenario bounds before allocating route arrays.
             m.routes = new Route[3];
             for (int d=0;d<3;d++) m.routes[d] = new Route { waypoints=new[] { new Point(0,0),new Point(0,0) } };

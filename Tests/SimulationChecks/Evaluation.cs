@@ -9,7 +9,7 @@ using LLM2Swarm;
 static class Evaluation
 {
     class Case { public string text { get; set; } public string status { get; set; } public int count { get; set; } public float seconds { get; set; } public string[] areas { get; set; } }
-    public static async Task Run(string caseFile)
+    public static async Task Run(string caseFile, string modelFile, string manifestFile, string chatTemplate)
     {
         string root = Directory.GetCurrentDirectory();
         var cases = JsonConvert.DeserializeObject<Case[]>(File.ReadAllText(Path.Combine(root,"LocalInference",caseFile)));
@@ -21,7 +21,7 @@ static class Evaluation
         {
             try
             {
-                var result = await LocalInterpreter.InterpretAsync(Path.Combine(root,"LocalInference"),Path.Combine(root,"Assets","StreamingAssets","Inference"),output,test.text,99,CancellationToken.None);
+                var result = await LocalInterpreter.InterpretAsync(Path.Combine(root,"LocalInference"),Path.Combine(root,"Assets","StreamingAssets","Inference"),output,test.text,99,CancellationToken.None,modelFile,manifestFile,chatTemplate);
                 var actual=result.response;
                 bool ok = actual.status == test.status;
                 if (ok && test.status == "proposal")

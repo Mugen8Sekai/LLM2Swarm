@@ -169,3 +169,8 @@ Packages/packages-lock.json linguist-generated
 
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
+
+# Preserve the frozen experimental state byte-for-byte, including SHA256 manifests.
+/Assets/Swarm/** -text
+/Tests/SimulationChecks/** -text
+/Experiments/** -text -filter

@@ -13,7 +13,7 @@ Las respuestas de aclaración o petición no soportada no habilitan una misión.
 ## Motor y modelo
 
 - llama.cpp **b10993**, Windows x64 CUDA 12.4.
-- Ministral 3 3B Instruct 2512 GGUF **Q4_K_M**, solo texto; no se descarga el proyector visual.
+- Candidatos instalados: Ministral 3 3B Instruct 2512 y Qwen3 4B, ambos GGUF **Q4_K_M**.
 - Revisión del modelo y SHA256: `installed.json`.
 - Contexto 4096, salida máxima 512 tokens, temperatura 0, semilla 42, gramática derivada del esquema JSON.
 - Plantilla de conversación incluida en el GGUF y prompt de sistema en español.
@@ -23,6 +23,7 @@ La instalación ya se ha realizado en este equipo. Para reproducirla en otra cop
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File LocalInference/Setup.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File LocalInference/Setup-Qwen3.ps1
 ```
 
 El script descarga unos 2,15 GB de modelo más los binarios oficiales y verifica SHA256. No modifica instalaciones globales. La inferencia usa archivos locales y `--offline`; la instalación inicial sí necesita Internet. Pesos, ejecutables y trazas voluminosas se excluyen de Git.
@@ -43,13 +44,23 @@ Desde la raíz del proyecto, con SDK .NET 8 y paquetes de Unity resueltos:
 dotnet run --project Tests/SimulationChecks
 dotnet run --project Tests/SimulationChecks -- evaluate
 dotnet run --project Tests/SimulationChecks -- evaluate holdout-cases.json
+dotnet run --project Tests/SimulationChecks -- evaluate holdout-cases.json Qwen3-4B-Q4_K_M.gguf installed-qwen3-4b.json chatml
 ```
 
 En este equipo el SDK está en `C:/Program Files/Unity/Hub/Editor/6000.6.0f1/Editor/Data/DotNetSdk/dotnet.exe`.
 
-Resultados preliminares: 20/30 con el prompt inicial, 30/30 tras ajustarlo sobre esos mismos casos y **9/12 con órdenes nuevas sin ajustes posteriores**. La última batería tarda de media unos 2,31 s por interpretación, incluyendo arranque y carga, en una RTX 3090. No es una comparación de modelos ni una estimación estadística de fiabilidad.
+Comparación ciega sobre los mismos 12 casos holdout, sin adaptar el prompt:
+
+| Modelo | Holdout | Latencia media | VRAM incremental | RAM pico (working set) |
+| --- | ---: | ---: | ---: | ---: |
+| Ministral 3 3B Q4_K_M | 9/12 | 2,31 s | 2.808 MiB | 2.472 MiB |
+| Qwen3 4B Q4_K_M | 8/12 | 2,37 s | 3.309 MiB | 2.792 MiB |
+
+La memoria se muestreó sobre una interpretación representativa con `-ngl 99`; la VRAM es el incremento del total informado por `nvidia-smi` y la RAM es el máximo working set del proceso `llama-cli`. Las medidas incluyen carga y descarga por solicitud y se realizaron en una RTX 3090. Son resultados preliminares, no una estimación estadística de fiabilidad.
 
 Fallos de la batería nueva: aclaración innecesaria ante «peinen», conversión incorrecta de un cuarto de minuto (30 s en lugar de 15 s) y rechazo de «peina el mapa». La revisión humana es necesaria; no se debe confundir JSON válido con comprensión correcta. Los resultados detallados están en `evaluation-report.json`; las trazas completas de cada ejecución permanecen en `evaluation-results` (no versionado). Se deben reservar nuevos casos si se continúa ajustando el prompt.
+
+Qwen también falla «peinen» y «un cuarto de minuto». Acierta «peina el mapa», pero clasifica como aclaración una prohibición de tránsito que debía ser `unsupported`, y como `unsupported` la contradicción «no salgas del norte... luego abajo», que debía pedir aclaración. Su plantilla Jinja embebida es incompatible con la gramática de salida en llama.cpp b10993; el harness usa el adaptador de serialización ChatML clásico (`--no-jinja --chat-template chatml`) sin cambiar el contenido del prompt ni el esquema.
 
 Se han ejecutado **9 pruebas EditMode dentro de Unity, todas correctas**, incluida una llamada real a Ministral desde el editor seguida de planificación/ejecución, y la cancelación del proceso local. Las comprobaciones adicionales del motor y las baterías de órdenes se ejecutaron desde el harness .NET. La interacción visual de esta revisión queda por comprobar en modo Play.
 

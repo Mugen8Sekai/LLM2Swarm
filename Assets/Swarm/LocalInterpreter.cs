@@ -16,8 +16,9 @@ namespace LLM2Swarm
     public static class LocalInterpreter
     {
         public const string ModelFile = "Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
-        public static bool Available(string root) => File.Exists(Path.Combine(root,"runtime","llama-cli.exe")) &&
-            File.Exists(Path.Combine(root,"models",ModelFile)) && File.Exists(Path.Combine(root,"installed.json"));
+        public static bool Available(string root, string modelFile = ModelFile, string manifestFile = "installed.json") =>
+            File.Exists(Path.Combine(root,"runtime","llama-cli.exe")) &&
+            File.Exists(Path.Combine(root,"models",modelFile)) && File.Exists(Path.Combine(root,manifestFile));
         // Windows command-line quoting, not shell execution. User text is only ever passed in a file.
         static string Quote(string value)
         {
@@ -25,9 +26,10 @@ namespace LLM2Swarm
             return "\""+value+"\"";
         }
         public static async Task<LocalInterpretationResult> InterpretAsync(string root, string assets, string logRoot,
-            string instruction, int gpuLayers, CancellationToken cancellation)
+            string instruction, int gpuLayers, CancellationToken cancellation, string modelFile = ModelFile,
+            string manifestFile = "installed.json", string chatTemplate = null)
         {
-            if (!Available(root)) throw new FileNotFoundException("Falta instalar el motor/modelo local. Ejecuta LocalInference/Setup.ps1.");
+            if (!Available(root,modelFile,manifestFile)) throw new FileNotFoundException("Falta instalar el motor/modelo local solicitado.");
             if (string.IsNullOrWhiteSpace(instruction) || instruction.Length > 2000) throw new ArgumentException("Escribe una instrucción de hasta 2000 caracteres.");
             string request = Path.Combine(logRoot,Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(request);
@@ -36,9 +38,10 @@ namespace LLM2Swarm
             File.WriteAllText(promptFile,instruction,new UTF8Encoding(false));
             File.Copy(Path.Combine(assets,"system.txt"),Path.Combine(request,"system.txt"));
             File.Copy(Path.Combine(assets,"response.schema.json"),Path.Combine(request,"response.schema.json"));
-            File.Copy(Path.Combine(root,"installed.json"),Path.Combine(request,"installed.json"));
-            string args = "-m "+Quote(Path.Combine(root,"models",ModelFile))+" -c 4096 -n 512 -ngl "+gpuLayers+
+            File.Copy(Path.Combine(root,manifestFile),Path.Combine(request,"installed.json"));
+            string args = "-m "+Quote(Path.Combine(root,"models",modelFile))+" -c 4096 -n 512 -ngl "+gpuLayers+
                 " --temp 0 --seed 42 --single-turn --simple-io --no-display-prompt --no-warmup --offline --log-disable --no-escape"+
+                (string.IsNullOrEmpty(chatTemplate) ? "" : " --no-jinja --chat-template "+Quote(chatTemplate))+
                 " --system-prompt-file "+Quote(Path.Combine(request,"system.txt"))+
                 " --json-schema-file "+Quote(Path.Combine(request,"response.schema.json"))+" -f "+Quote(promptFile)+" --output-file "+Quote(outputFile);
             File.WriteAllText(Path.Combine(request,"arguments.txt"),args);

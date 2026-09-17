@@ -6,7 +6,15 @@ static class Program
     static void Check(bool condition, string message) { if (!condition) throw new Exception(message); }
     static void Main(string[] args)
     {
-        if (args.Length > 0 && args[0] == "evaluate") { Evaluation.Run(args.Length > 1 ? args[1] : "evaluation-cases.json").GetAwaiter().GetResult(); return; }
+        if(args.Length>0 && args[0]=="pilot") { SearchPilot.Run(); return; }
+        if(args.Length>0 && args[0]=="serve") { SearchPilot.Serve(); return; }
+        if(args.Length>0 && args[0]=="bench") { SearchPilot.Benchmark(); return; }
+        SearchPilot.Checks();
+        if (args.Length > 0 && args[0] == "evaluate") { Evaluation.Run(
+            args.Length > 1 ? args[1] : "evaluation-cases.json",
+            args.Length > 2 ? args[2] : LocalInterpreter.ModelFile,
+            args.Length > 3 ? args[3] : "installed.json",
+            args.Length > 4 ? args[4] : null).GetAwaiter().GetResult(); return; }
         var scenario = new Scenario();
         var phased = new Simulation(MissionPlanner.Plan(scenario,new MissionIntent { requiredFindings=20,maxSeconds=600,areas=new[] {"north","center","south"} }));
         while (phased.ActivePhase == 0 && !phased.Finished)
@@ -59,6 +67,7 @@ static class Program
         var swept = new Simulation(fast); swept.Step();
         Check(swept.Coverage > .99 && swept.Findings.Count == 12,"Continuous sensor over long movement");
         var exhaustedMission = Mission.Sweep(); exhaustedMission.sensorRadius = .0001f;
+        exhaustedMission.starts=new[]{new Point(0,0),new Point(0,0),new Point(0,0)};
         for (int d = 0; d < 3; d++) exhaustedMission.routes[d].waypoints = new[] { new Point(0,0),new Point(0,0) };
         var exhausted = new Simulation(exhaustedMission); exhausted.Step(); Check(exhausted.FinishReason == "search_exhausted","Exhaustion is not success");
         var interrupted = new Simulation(Mission.Sweep()); interrupted.Interrupt(); interrupted.Step();

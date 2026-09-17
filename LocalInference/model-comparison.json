@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "gpu": "NVIDIA RTX 3090",
+    "runtime": "llama.cpp b10993",
+    "gpuLayers": 99,
+    "cases": "holdout-cases.json",
+    "caseCount": 12
+  },
+  "models": [
+    {
+      "name": "Ministral 3 3B Instruct 2512",
+      "quantization": "Q4_K_M",
+      "passed": 9,
+      "meanSeconds": 2.313209833333333,
+      "incrementalGpuMiB": 2808,
+      "peakWorkingSetMiB": 2472.1,
+      "failures": ["peinen", "un cuarto de minuto", "peina el mapa"]
+    },
+    {
+      "name": "Qwen3 4B",
+      "quantization": "Q4_K_M",
+      "passed": 8,
+      "meanSeconds": 2.36658705,
+      "incrementalGpuMiB": 3309,
+      "peakWorkingSetMiB": 2792.2,
+      "chatTemplateAdapter": "--no-jinja --chat-template chatml",
+      "failures": ["peinen", "un cuarto de minuto", "prohibición de tránsito", "contradicción norte/sur"]
+    }
+  ]
+}

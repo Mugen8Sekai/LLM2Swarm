@@ -1,0 +1,7 @@
+{
+  "observationDecisions": 641,
+  "fullEpisodeMetrics": 16,
+  "baselineReplays": 96,
+  "maxLogitAbsoluteError": 1.377357518705935e-06,
+  "frozenSourcesUnchanged": true
+}

@@ -34,6 +34,7 @@ namespace LLM2Swarm.Tests
         [Test] public void ExhaustionDoesNotMeanSuccess()
         {
             var m = Mission.Sweep(); m.sensorRadius = .0001f;
+            m.starts=new[]{new Point(0,0),new Point(0,0),new Point(0,0)};
             foreach (var route in m.routes) route.waypoints = new[] {new Point(0,0),new Point(0,0)};
             var s = new Simulation(m); s.Step();
             Assert.That(s.FinishReason, Is.EqualTo("search_exhausted"));
