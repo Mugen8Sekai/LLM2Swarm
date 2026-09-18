@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace LLM2Swarm
 {
+    public enum LocalModel { Ministral3B, Qwen3_4B }
     public sealed class LocalInterpretationResult
     {
         public Interpretation response;
@@ -16,6 +17,11 @@ namespace LLM2Swarm
     public static class LocalInterpreter
     {
         public const string ModelFile = "Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
+        public static string ModelFileFor(LocalModel model) => model == LocalModel.Qwen3_4B ? "Qwen3-4B-Q4_K_M.gguf" : ModelFile;
+        public static string ManifestFor(LocalModel model) => model == LocalModel.Qwen3_4B ? "installed-qwen3-4b.json" : "installed.json";
+        public static string ChatTemplateFor(LocalModel model) => model == LocalModel.Qwen3_4B ? "chatml" : null;
+        public static string DisplayName(LocalModel model) => model == LocalModel.Qwen3_4B ? "Qwen3 4B · Q4_K_M" : "Ministral 3B · Q4_K_M";
+        public static bool Available(string root, LocalModel model) => Available(root,ModelFileFor(model),ManifestFor(model));
         public static bool Available(string root, string modelFile = ModelFile, string manifestFile = "installed.json") =>
             File.Exists(Path.Combine(root,"runtime","llama-cli.exe")) &&
             File.Exists(Path.Combine(root,"models",modelFile)) && File.Exists(Path.Combine(root,manifestFile));

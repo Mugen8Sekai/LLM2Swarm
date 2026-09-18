@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading;
 using Newtonsoft.Json;
+using LLM2Swarm.Experiments;
 
 namespace LLM2Swarm
 {
@@ -25,6 +26,12 @@ namespace LLM2Swarm
         string inferenceRoot, inferenceAssets, inferenceLogs;
         bool interpreting;
         CancellationTokenSource interpretationCancellation;
+        LocalModel selectedModel=LocalModel.Ministral3B;
+        SearchEnvironment experiment;
+        ISearchStrategy experimentStrategy;
+        SearchObservation experimentObservation;
+        double experimentAccumulator;
+        int selectedStrategy;
         public int gpuLayers = 99;
         GUIStyle titleStyle, sectionStyle, textStyle, smallStyle, buttonStyle, jsonStyle, instructionStyle;
         [Tooltip("Optional manually configured mission JSON")]
@@ -45,6 +52,7 @@ namespace LLM2Swarm
         }
         void ResetMission(Mission mission)
         {
+            experiment=null;experimentStrategy=null;experimentObservation=null;experimentAccumulator=0;
             if (simulation == null || !ReferenceEquals(mission,simulation.Mission)) { activeIntent=null; activeInstruction=""; activeEvidence=""; }
             simulation = new Simulation(mission); running = false; accumulator = 0;
             seed = mission.seed.ToString(); jsonDraft = JsonUtility.ToJson(mission,true); status = "Misión preparada";
@@ -62,7 +70,8 @@ namespace LLM2Swarm
             string submitted = instruction;
             try
             {
-                var result = await LocalInterpreter.InterpretAsync(inferenceRoot,inferenceAssets,inferenceLogs,submitted,gpuLayers,cancellation.Token);
+                var result = await LocalInterpreter.InterpretAsync(inferenceRoot,inferenceAssets,inferenceLogs,submitted,gpuLayers,cancellation.Token,
+                    LocalInterpreter.ModelFileFor(selectedModel),LocalInterpreter.ManifestFor(selectedModel),LocalInterpreter.ChatTemplateFor(selectedModel));
                 if (cancellation.IsCancellationRequested || this == null) return;
                 interpretationMessage=result.response.message;
                 proposalInstruction=submitted; proposalEvidence=result.requestDirectory;
@@ -89,12 +98,29 @@ namespace LLM2Swarm
         void Update()
         {
             if (!running || simulation.Finished) return;
+            if(experiment!=null)
+            {
+                experimentAccumulator+=Time.unscaledDeltaTime;
+                while(experimentAccumulator>=1&&!experiment.Finished)
+                {
+                    experimentAccumulator-=1;experiment.Step(experimentStrategy.Decide(experiment.Observe()));experimentObservation=experiment.Observe();
+                }
+                if(experiment.Finished){running=false;status=$"Experimento {experimentStrategy.Id} · {experiment.Metrics().finishReason}";}
+                return;
+            }
             accumulator += Time.unscaledDeltaTime;
             while (accumulator >= simulation.Mission.stepSeconds && !simulation.Finished)
             { accumulator -= simulation.Mission.stepSeconds; simulation.Step(); }
             if (simulation.Finished) { running = false; Export(); }
         }
         void Attempt(Action action) { try { action(); } catch (Exception e) { status = e.Message; Debug.LogException(e); } }
+        void StartExperiment()
+        {
+            var intent=new MissionIntent{requiredFindings=simulation.Mission.requiredFindings,maxSeconds=simulation.Mission.maxSeconds,areas=new[]{"all"}};
+            experimentStrategy=selectedStrategy==1 ? new SystematicStrategy(false) : selectedStrategy==2 ? new SystematicStrategy(true) :
+                new PpoSeed47Strategy(File.ReadAllText(Path.Combine(Directory.GetParent(Application.dataPath).FullName,"Experiments","results","ppo","full","47","policy.json")));
+            experiment=new SearchEnvironment(Scenario.From(simulation.Mission),intent);experimentObservation=experiment.Observe();experimentStrategy.Reset(experimentObservation);experimentAccumulator=0;running=true;status="Experimento Fast 2D · "+experimentStrategy.Id;
+        }
         void Export()
         {
             Attempt(() => {
@@ -137,7 +163,8 @@ namespace LLM2Swarm
             var missionPanel = new Rect(width-panelWidth-20,90,panelWidth,height-110);
             Box(mapPanel,new Color(.065f,.085f,.12f));
             GUI.Label(new Rect(mapPanel.x+16,mapPanel.y+12,mapPanel.width-32,26),"SIMULACIÓN EN TIEMPO REAL",sectionStyle);
-            DrawMap(new Rect(mapPanel.x+20,mapPanel.y+56,mapPanel.width-40,mapPanel.height-104));
+            if(experiment==null) DrawMap(new Rect(mapPanel.x+20,mapPanel.y+56,mapPanel.width-40,mapPanel.height-104));
+            else DrawExperimentMap(new Rect(mapPanel.x+20,mapPanel.y+56,mapPanel.width-40,mapPanel.height-104));
             GUI.Label(new Rect(mapPanel.x+16,mapPanel.yMax-36,mapPanel.width-32,26),"Verde: explorado    Blanco: hallazgo    Líneas: rutas",smallStyle);
             float buttonWidth = (mapPanel.width-24)/3;
             GUI.enabled = !simulation.Finished && !interpreting;
@@ -145,7 +172,10 @@ namespace LLM2Swarm
             GUI.enabled = !interpreting;
             if (ActionButton(new Rect(mapPanel.x+buttonWidth+12,mapPanel.yMax+16,buttonWidth,52),"Reiniciar",new Color(.92f,.48f,.12f))) ResetMission(simulation.Mission);
             GUI.enabled = !simulation.Finished;
-            if (ActionButton(new Rect(mapPanel.x+2*(buttonWidth+12),mapPanel.yMax+16,buttonWidth,52),"Interrumpir",new Color(.8f,.19f,.22f))) { simulation.Interrupt(); running = false; Export(); }
+            if (ActionButton(new Rect(mapPanel.x+2*(buttonWidth+12),mapPanel.yMax+16,buttonWidth,52),"Interrumpir",new Color(.8f,.19f,.22f)))
+            {
+                if(experiment!=null){running=false;status="Experimento interrumpido";}else{simulation.Interrupt();running=false;Export();}
+            }
             GUI.enabled = true;
             DrawMissionPanel(missionPanel);
             GUI.matrix = original;
@@ -184,7 +214,7 @@ namespace LLM2Swarm
         {
             Box(panel,new Color(.085f,.105f,.15f));
             var m = simulation.Mission;
-            GUILayout.BeginArea(new Rect(panel.x+16,panel.y+12,panel.width-32,194));
+            GUILayout.BeginArea(new Rect(panel.x+16,panel.y+12,panel.width-32,318));
             GUILayout.Label("INSTRUCCIÓN DE MISIÓN",sectionStyle);
             GUI.enabled = !interpreting;
             string editedInstruction = GUILayout.TextArea(instruction,instructionStyle,GUILayout.Height(68));
@@ -197,13 +227,21 @@ namespace LLM2Swarm
             if (string.IsNullOrWhiteSpace(instruction))
                 GUILayout.Label("Ej.: Encuentra dos objetivos en menos de 120 s.",smallStyle);
             else GUILayout.Label(interpreting ? "Interpretando en este equipo…" : "Revisa la propuesta antes de preparar",smallStyle);
-            GUI.enabled = !running && !interpreting && !string.IsNullOrWhiteSpace(instruction) && LocalInterpreter.Available(inferenceRoot);
+            GUILayout.Label("MODELO LOCAL",smallStyle);
+            selectedModel=(LocalModel)GUILayout.SelectionGrid((int)selectedModel,new[]{"Ministral 3B","Qwen3 4B"},2,GUILayout.Height(28));
+            bool modelAvailable=LocalInterpreter.Available(inferenceRoot,selectedModel);
+            GUI.enabled = !running && !interpreting && !string.IsNullOrWhiteSpace(instruction) && modelAvailable;
             if (GUILayout.Button("Interpretar instrucción",buttonStyle,GUILayout.Height(36))) InterpretInstruction();
             GUI.enabled = true;
             if (interpreting) { if (GUILayout.Button("Cancelar interpretación")) interpretationCancellation?.Cancel(); }
-            else GUILayout.Label(LocalInterpreter.Available(inferenceRoot) ? "Ministral 3B · local · sin envío a Internet" : "Modelo pendiente: ejecuta LocalInference/Setup.ps1",smallStyle);
+            else GUILayout.Label(modelAvailable ? LocalInterpreter.DisplayName(selectedModel)+" · local · sin envío a Internet" : "Modelo pendiente: revisa LocalInference/README.md",smallStyle);
+            GUILayout.Label("ESTRATEGIA FAST 2D",smallStyle);
+            selectedStrategy=GUILayout.SelectionGrid(selectedStrategy,new[]{"Manual","Baseline A","Baseline B","PPO seed 47"},2,GUILayout.Height(48));
+            GUI.enabled=!running&&!interpreting&&selectedStrategy>0;
+            if(GUILayout.Button("Iniciar estrategia seleccionada",buttonStyle,GUILayout.Height(32))) Attempt(StartExperiment);
+            GUI.enabled=true;
             GUILayout.EndArea();
-            GUILayout.BeginArea(new Rect(panel.x+16,panel.y+214,panel.width-32,panel.height-266));
+            GUILayout.BeginArea(new Rect(panel.x+16,panel.y+338,panel.width-32,panel.height-390));
             missionScroll = GUILayout.BeginScrollView(missionScroll);
             if (!string.IsNullOrEmpty(interpretationMessage))
             {
@@ -294,6 +332,21 @@ namespace LLM2Swarm
             if (GUILayout.Button("Proponer barrido",buttonStyle,GUILayout.Height(36)))
                 Attempt(() => { proposedIntent=null; proposedMission = Mission.Sweep(int.Parse(seed)); jsonDraft = JsonUtility.ToJson(proposedMission,true); status = "Barrido propuesto; pendiente de preparar."; });
             GUILayout.EndHorizontal();
+        }
+        void DrawExperimentMap(Rect viewport)
+        {
+            var o=experimentObservation;if(o==null)return;
+            float scale=Mathf.Min(viewport.width/o.width,viewport.height/o.height);
+            var area=new Rect(viewport.center.x-o.width*scale/2,viewport.center.y-o.height*scale/2,o.width*scale,o.height*scale);
+            Box(new Rect(area.x-2,area.y-2,area.width+4,area.height+4),Color.gray);Box(area,new Color(.09f,.12f,.17f));
+            float cellWidth=area.width/o.columns,cellHeight=area.height/o.rows;
+            for(int r=0;r<o.completed.Length;r++)
+            {
+                float coverage=(float)o.regionCoverage[r];
+                if(coverage<=0)continue;int x=r%o.columns,y=r/o.columns;
+                Box(new Rect(area.x+x*cellWidth,area.yMax-(y+1)*cellHeight,cellWidth,cellHeight),new Color(.12f,.32f,.3f,Mathf.Clamp01(.2f+.8f*coverage)));
+            }
+            for(int d=0;d<3;d++){DrawPoint(area,o.positions[d],scale,12,colors[d]);var p=o.positions[d];GUI.Label(new Rect(area.x+p.x*scale+8,area.yMax-p.y*scale-10,40,20),"D"+(d+1));}
         }
         void DrawMap(Rect viewport)
         {
