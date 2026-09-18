@@ -168,7 +168,12 @@ namespace LLM2Swarm
             GUI.Label(new Rect(mapPanel.x+16,mapPanel.yMax-36,mapPanel.width-32,26),"Verde: explorado    Blanco: hallazgo    Líneas: rutas",smallStyle);
             float buttonWidth = (mapPanel.width-24)/3;
             GUI.enabled = !simulation.Finished && !interpreting;
-            if (ActionButton(new Rect(mapPanel.x,mapPanel.yMax+16,buttonWidth,52),running ? "Pausar" : simulation.Tick > 0 ? "Continuar" : "Iniciar",new Color(.12f,.62f,.34f))) running = !running;
+            string startLabel=selectedStrategy==0 ? (running ? "Pausar" : simulation.Tick > 0 ? "Continuar" : "Iniciar") :
+                running ? "Pausar" : experiment==null ? "Iniciar " + new[]{"","Baseline A","Baseline B","PPO 47"}[selectedStrategy] : "Continuar " + new[]{"","Baseline A","Baseline B","PPO 47"}[selectedStrategy];
+            if (ActionButton(new Rect(mapPanel.x,mapPanel.yMax+16,buttonWidth,52),startLabel,new Color(.12f,.62f,.34f)))
+            {
+                if(selectedStrategy>0&&experiment==null) Attempt(StartExperiment); else running=!running;
+            }
             GUI.enabled = !interpreting;
             if (ActionButton(new Rect(mapPanel.x+buttonWidth+12,mapPanel.yMax+16,buttonWidth,52),"Reiniciar",new Color(.92f,.48f,.12f))) ResetMission(simulation.Mission);
             GUI.enabled = !simulation.Finished;
@@ -213,6 +218,7 @@ namespace LLM2Swarm
         void DrawMissionPanel(Rect panel)
         {
             Box(panel,new Color(.085f,.105f,.15f));
+            if(experiment!=null){DrawExperimentPanel(panel);return;}
             var m = simulation.Mission;
             GUILayout.BeginArea(new Rect(panel.x+16,panel.y+12,panel.width-32,318));
             GUILayout.Label("INSTRUCCIÓN DE MISIÓN",sectionStyle);
@@ -237,9 +243,7 @@ namespace LLM2Swarm
             else GUILayout.Label(modelAvailable ? LocalInterpreter.DisplayName(selectedModel)+" · local · sin envío a Internet" : "Modelo pendiente: revisa LocalInference/README.md",smallStyle);
             GUILayout.Label("ESTRATEGIA FAST 2D",smallStyle);
             selectedStrategy=GUILayout.SelectionGrid(selectedStrategy,new[]{"Manual","Baseline A","Baseline B","PPO seed 47"},2,GUILayout.Height(48));
-            GUI.enabled=!running&&!interpreting&&selectedStrategy>0;
-            if(GUILayout.Button("Iniciar estrategia seleccionada",buttonStyle,GUILayout.Height(32))) Attempt(StartExperiment);
-            GUI.enabled=true;
+            if(selectedStrategy>0) GUILayout.Label("Al pulsar el botón verde bajo el mapa se ejecutará esta estrategia.",smallStyle);
             GUILayout.EndArea();
             GUILayout.BeginArea(new Rect(panel.x+16,panel.y+338,panel.width-32,panel.height-390));
             missionScroll = GUILayout.BeginScrollView(missionScroll);
@@ -296,6 +300,19 @@ namespace LLM2Swarm
             GUILayout.EndArea();
             GUILayout.BeginArea(new Rect(panel.x+16,panel.yMax-44,panel.width-32,40));
             GUILayout.Label(new GUIContent(status,status),smallStyle);
+            GUILayout.EndArea();
+        }
+        void DrawExperimentPanel(Rect panel)
+        {
+            var o=experimentObservation;var metrics=experiment.Metrics();
+            GUILayout.BeginArea(new Rect(panel.x+16,panel.y+12,panel.width-32,panel.height-24));
+            GUILayout.Label("FAST 2D · ESTRATEGIA EXPERIMENTAL",sectionStyle);
+            GUILayout.Label(experimentStrategy.Id,textStyle);
+            GUILayout.Space(10);
+            GUILayout.Label($"Tiempo: {o.seconds:F1} s / {o.seconds+o.remainingSeconds:F0} s\nCobertura: {metrics.coverage:P1}\nHallazgos: {metrics.found}/{o.requiredFindings}",textStyle);
+            GUILayout.Space(10);
+            GUILayout.Label(running?"PPO seed 47 decide regiones desde SearchObservation pública.":"Ejecución pausada o finalizada.",smallStyle);
+            GUILayout.Label("El botón verde bajo el mapa pausa o continúa. Reiniciar vuelve a la misión manual.",smallStyle);
             GUILayout.EndArea();
         }
         void DrawJsonDetails()
