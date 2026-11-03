@@ -1,4 +1,4 @@
-param([ValidateSet('smoke','slice')][string]$Mode='slice')
+param([ValidateSet('smoke','slice')][string]$Mode='slice',[string]$MissionFile='',[string]$OutputDirectory='')
 $ErrorActionPreference='Stop'
 $repoPath=(Resolve-Path "$PSScriptRoot/../..").Path
 $dotnetPath='C:/Program Files/Unity/Hub/Editor/6000.6.0f1/Editor/Data/DotNetSdk/dotnet.exe'
@@ -7,7 +7,10 @@ function Check-Frozen {
     foreach($manifest in @('Experiments/ppo/frozen.json','Experiments/ppo/report/artifact-hashes.json')) {
         $entries=Get-Content -LiteralPath "$repoPath/$manifest" -Raw | ConvertFrom-Json
         foreach($entry in $entries.PSObject.Properties) {
-            if((Get-FileHash -LiteralPath "$repoPath/$($entry.Name)" -Algorithm SHA256).Hash -ne $entry.Value){throw "Frozen artifact changed: $($entry.Name)"}
+            $sha=[Security.Cryptography.SHA256]::Create()
+            try {$hash=[BitConverter]::ToString($sha.ComputeHash([IO.File]::ReadAllBytes("$repoPath/$($entry.Name)"))).Replace('-','')}
+            finally {$sha.Dispose()}
+            if($hash -ne $entry.Value){throw "Frozen artifact changed: $($entry.Name)"}
             $count++
         }
     }
@@ -16,8 +19,10 @@ function Check-Frozen {
 Check-Frozen
 & $dotnetPath run --project "$PSScriptRoot/Host" -- test
 if($LASTEXITCODE -ne 0){throw 'Contract tests failed'}
-$runPath=Join-Path $PSScriptRoot ('.runtime/'+$Mode+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss'))
+$runPath=if($OutputDirectory){[IO.Path]::GetFullPath($OutputDirectory)}else{Join-Path $PSScriptRoot ('.runtime/'+$Mode+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fffffff'))}
+if(Test-Path -LiteralPath $runPath){throw "Output directory already exists: $runPath"}
 New-Item -ItemType Directory -Path $runPath -Force | Out-Null
+if($MissionFile){Copy-Item -LiteralPath $MissionFile -Destination (Join-Path $runPath 'prepared-mission.json')}
 $linuxRepo='/mnt/'+$repoPath.Substring(0,1).ToLower()+$repoPath.Substring(2).Replace('\','/')
 $linuxRun='/mnt/'+$runPath.Substring(0,1).ToLower()+$runPath.Substring(2).Replace('\','/')
 $vehicles=if($Mode -eq 'smoke'){1}else{3}

@@ -5,12 +5,30 @@ namespace LLM2Swarm.Px4;
 
 public sealed class MissionHost
 {
+    public static ISearchStrategy CreateStrategy(int selected) => selected switch {
+        1 => new SystematicStrategy(false),
+        2 => new SystematicStrategy(true),
+        3 => new PpoSeed47Strategy(File.ReadAllText(Path.Combine(AppContext.BaseDirectory,"policy.json"))),
+        _ => throw new ArgumentException("Unsupported strategy")
+    };
     public static Scenario Scenario()=>new Scenario{seed=100000,starts=new[]{new Point(10,0),new Point(30,0),new Point(50,0)}};
     public static MissionIntent Intent()=>new MissionIntent{requiredFindings=12,maxSeconds=120,areas=new[]{"all"}};
     public async Task Run(IExecutionBackend backend,string output)
     {
         var scenario=Scenario();var intent=Intent();var config=new SearchConfig();var ledger=new TelemetryLedger(scenario,intent);
-        var strategy=new SystematicStrategy(false);var completed=new bool[24];var assignments=new[]{-1,-1,-1};var active=new WaypointTask[3];
+        int selectedStrategy=1;
+        string requestPath=Path.Combine(output,"prepared-mission.json");
+        if(File.Exists(requestPath))
+        {
+            var request=Newtonsoft.Json.Linq.JObject.Parse(File.ReadAllText(requestPath));
+            if(request["seed"]!=null) scenario.seed=(int)request["seed"];
+            intent=request["intent"].ToObject<MissionIntent>();intent.Validate();
+            int selected=(int)request["strategy"];
+            if(intent.areas.Length!=1 || intent.areas[0]!="all" || selected<1 || selected>3) throw new ArgumentException("Unsupported prepared mission");
+            selectedStrategy=selected;ledger=new TelemetryLedger(scenario,intent);
+        }
+        var strategy=CreateStrategy(selectedStrategy);var completed=new bool[24];var assignments=new[]{-1,-1,-1};var active=new WaypointTask[3];
+        if(selectedStrategy==3) File.Copy(Path.Combine(AppContext.BaseDirectory,"policy.json"),Path.Combine(output,"policy.json"),true);
         int sequence=0,snapshotSequence=0,snapshotPublishErrors=0;double last=-1,nextDecision=0;string reason="aborted",failure=null;bool reset=false;
         using var log=new StreamWriter(Path.Combine(output,"events.jsonl")){AutoFlush=true};
         void Record(object value)=>log.WriteLine(JsonConvert.SerializeObject(value));

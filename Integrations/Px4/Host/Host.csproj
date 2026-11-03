@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../../Assets/Swarm/PpoSeed47Strategy.cs" Link="PpoSeed47Strategy.cs" />
+    <None Include="../../../Experiments/results/ppo/full/47/policy.json" Link="policy.json" CopyToOutputDirectory="PreserveNewest" />
     <Compile Include="../../../Assets/Swarm/Simulation.cs" Link="Frozen/Simulation.cs" />
     <Compile Include="../../../Assets/Swarm/MissionIntent.cs" Link="Frozen/MissionIntent.cs" />
     <Compile Include="../../../Assets/Swarm/SearchExperiment.cs" Link="Frozen/SearchExperiment.cs" />

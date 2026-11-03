@@ -1,5 +1,48 @@
 # PX4 integration slice
 
+## Fase 2: misión integrada
+
+### Comparativa automatizada
+
+Desde la raíz del repositorio, después de haber arrancado una misión preparada
+desde Unity (se reutiliza el último `prepared-*.json` exportado):
+
+```powershell
+# Generar e inspeccionar el plan, sin arrancar vehículos:
+python Integrations/Px4/batch.py
+# Ejecutar A/B/PPO secuencialmente para tres semillas de validación (9 vuelos):
+python Integrations/Px4/batch.py --execute
+# Repetir solo el escenario original (3 vuelos):
+python Integrations/Px4/batch.py --execute --seeds 100000
+# También admite --mission ruta/al/prepared.json y --repeats 3.
+python Integrations/Px4/batch.py --summarize Integrations/Px4/.runtime/batch-<fecha>
+python Integrations/Px4/test_batch.py
+```
+
+El lote conserva la interpretación del LLM, cambia únicamente estrategia y semilla
+de objetivos y rota el orden A/B/PPO por bloque. Las posiciones de salida, sensores
+y dinámica siguen siendo los del escenario PX4. No se consume TEST ni se entrena.
+Esperar a que termine la ejecución de Unity antes de iniciar el lote; no arrancar
+misiones manuales durante la comparación. Gazebo se reinicia en cada vuelo.
+Los lotes quedan en `.runtime/batch-*`, con peticiones, logs, `batch.json`,
+`episodes.csv` y `REPORT.md`. El resumen solo considera válidos los vuelos con
+resumen sin fallo y cierre correcto del supervisor. No hay reintentos silenciosos:
+un error de infraestructura detiene el lote y conserva los resultados anteriores.
+La cobertura se mide al final de cada vuelo, por lo que su duración afecta a la
+comparación; revisar también éxito, tiempo hasta K hallazgos y distancia.
+
+La pestaña Misión integrada puede enviar una intención preparada (`areas: ["all"]`)
+y elegir baseline A, baseline B o PPO seed 47. El escenario PX4 sigue siendo el
+escenario fijo descrito abajo. La política usa las observaciones de telemetría
+medida y el mismo planificador local de tareas que los baselines; no recibe
+objetivos ocultos. El host copia el checkpoint utilizado a `policy.json` dentro
+de la ejecución. Es inferencia de la política entrenada en 2D, sin entrenamiento
+adicional ni garantía de conservar su rendimiento en dinámica PX4.
+
+Los checks del host verifican carga del checkpoint y decisiones admitidas por
+el entorno de búsqueda. La validación de vuelo PPO en Gazebo queda pendiente.
+La descripción histórica de baseline A a continuación corresponde al slice original.
+
 This directory is independent of the frozen Fast 2D experiment. No policies are trained.
 The three design decisions in DESIGN.md were approved: position Offboard, a dedicated
 Ubuntu 24.04 WSL distribution, and operational altitude layers 5/8/11 m.

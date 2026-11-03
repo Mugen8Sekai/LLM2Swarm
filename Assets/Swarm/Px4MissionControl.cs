@@ -11,6 +11,7 @@ namespace LLM2Swarm
     // Read-only projection of MissionHost state. This component has no backend command channel.
     public sealed class Px4MissionControl : MonoBehaviour
     {
+        public SimulationRunner missionEditor;
         [Serializable] sealed class ScenarioView { public float width,height,cellSize,sensorRadius; public int targetCount; }
         [Serializable] sealed class IntentView { public int requiredFindings; public double maxSeconds; }
         [Serializable] sealed class MetricsView { public double coverage; public int found; public int[] findingsByDrone; }
@@ -30,8 +31,14 @@ namespace LLM2Swarm
         }
         sealed class ReadResult
         {
-            public string directory,json,error; public byte[][] jpeg=new byte[3][]; public long[] cameraTicks=new long[3];
+            public string directory,json,error,summary; public byte[][] jpeg=new byte[3][]; public long[] cameraTicks=new long[3];
         }
+        [Serializable] sealed class FinalReport { public string reason,failure; public FinalMetrics metrics; }
+        [Serializable] sealed class FinalMetrics { public double seconds,coverage; public int found; }
+        FinalReport finalReport;
+        System.Diagnostics.Process controlProcess;
+        bool launching;
+        string sentMission="";
 
         readonly Color[] colors={new Color(.2f,.8f,1),new Color(1,.7f,.2f),new Color(.9f,.4f,.8f)};
         readonly object pendingLock=new object();
@@ -72,10 +79,11 @@ namespace LLM2Swarm
             try
             {
                 string directory=Directory.Exists(root)?Directory.GetDirectories(root,"slice-*")
-                    .Where(d=>File.Exists(Path.Combine(d,"snapshot.json"))).OrderByDescending(d=>File.GetLastWriteTimeUtc(Path.Combine(d,"snapshot.json"))).FirstOrDefault():null;
+                    .OrderByDescending(d=>Directory.GetCreationTimeUtc(d)).FirstOrDefault():null;
                 if(directory==null){result.error="No hay una ejecución PX4 con snapshots";return result;}
                 result.directory=directory;
-                result.json=ReadShared(Path.Combine(directory,"snapshot.json"));
+                if(File.Exists(Path.Combine(directory,"snapshot.json"))) result.json=ReadShared(Path.Combine(directory,"snapshot.json"));
+                if(File.Exists(Path.Combine(directory,"summary.json"))) result.summary=ReadShared(Path.Combine(directory,"summary.json"));
                 for(int i=0;i<3;i++)
                 {
                     string path=Path.Combine(directory,$"camera-{i}.jpg");
@@ -106,6 +114,10 @@ namespace LLM2Swarm
             if(!string.IsNullOrEmpty(result.error)){status=result.error;return;}
             try
             {
+                if(sourceDirectory!=result.directory){snapshot=null;finalReport=null;Array.Clear(loadedCameraTicks,0,3);}
+                sourceDirectory=result.directory;
+                finalReport=result.summary==null?null:JsonConvert.DeserializeObject<FinalReport>(result.summary);
+                if(result.json==null){status="Preparando vehículos · esperando telemetría";return;}
                 var next=JsonConvert.DeserializeObject<Snapshot>(result.json);
                 if(next==null||next.type!="mission-snapshot"||next.schemaVersion!=1||next.positions?.Length!=3||next.vehicles?.Length!=3)
                     throw new InvalidDataException("MissionSnapshot incompatible o incompleto");
@@ -129,9 +141,14 @@ namespace LLM2Swarm
         {
             try
             {
+                if(action=="start" && (IsActiveRun() || launching)) return;
                 string root=Directory.GetParent(Application.dataPath).FullName,script=Path.Combine(root,"Integrations","Px4","MissionControlControl.ps1");
                 if(!File.Exists(script))throw new FileNotFoundException("No se encontró el supervisor local",script);
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("powershell.exe",$"-NoProfile -ExecutionPolicy Bypass -File \"{script}\" -Action {action}"){UseShellExecute=false,CreateNoWindow=true});controlStatus=action=="start"?"Solicitud de inicio enviada al supervisor local":"Abort solicitado; MissionHost aterrizará los UAV";
+                string request=action=="start" && missionEditor!=null ? " -MissionFile \""+missionEditor.SavePx4Request(runtimeRoot)+"\"" : "";
+                controlProcess=System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("powershell.exe",$"-NoProfile -ExecutionPolicy Bypass -File \"{script}\" -Action {action}"+request){UseShellExecute=false,CreateNoWindow=true});
+                launching=action=="start";
+                if(launching){sentMission=missionEditor==null?"Misión PX4 de referencia":missionEditor.PreparedMissionSummary;finalReport=null;}
+                controlStatus=action=="start"?"Arrancando supervisor local":"Interrupción solicitada · aterrizando";
             }
             catch(Exception e){controlStatus=e.Message;}
         }
@@ -148,16 +165,32 @@ namespace LLM2Swarm
 
         void OnGUI()
         {
-            EnsureStyles(); float scale=Mathf.Min(1,Mathf.Min(Screen.width/1200f,Screen.height/720f));
+            EnsureStyles(); float scale=Mathf.Min(1,Mathf.Min(Screen.width/(missionEditor!=null?1620f:1200f),Screen.height/720f));
             Matrix4x4 old=GUI.matrix;GUI.matrix=Matrix4x4.Scale(new Vector3(scale,scale,1));
             float width=Screen.width/scale,height=Screen.height/scale;
             Box(new Rect(0,0,width,height),new Color(.035f,.05f,.08f));
-            GUI.Label(new Rect(22,14,width-44,34),"LLM2Swarm  /  Mission Control PX4",titleStyle);
-            GUI.Label(new Rect(22,50,width-44,22),status,smallStyle);
             bool active=IsActiveRun();
+            if(launching && controlProcess!=null && controlProcess.HasExited)
+            { launching=false; if(controlProcess.ExitCode!=0)controlStatus="Fallo al iniciar el supervisor"; }
+            if(missionEditor!=null)
+            {
+                GUI.enabled=!active && !launching;
+                missionEditor.DrawIntegratedPreparation(new Rect(width-410,90,390,height-110));
+                GUI.enabled=true;
+                width-=430;
+            }
+            GUI.Label(new Rect(22,14,width-44,34),"LLM2Swarm  /  Mission Control PX4",titleStyle);
+            string resultText=finalReport?.metrics==null ? status : $"{sentMission} · Resultado: {finalReport.metrics.found} hallazgos · {finalReport.metrics.seconds:F1} s · cobertura {finalReport.metrics.coverage:P1}";
+            GUI.Label(new Rect(22,50,width-44,22),resultText,smallStyle);
+            GUI.enabled=!active && !launching;
             if(GUI.Button(new Rect(22,74,112,30),"Start PX4"))RequestControl("start");
             GUI.enabled=active;if(GUI.Button(new Rect(142,74,112,30),"Abort PX4"))RequestControl("abort");GUI.enabled=true;
-            GUI.Label(new Rect(264,80,width-286,22),active?"Misión activa · "+controlStatus:controlStatus,smallStyle);
+            string state=active ? (finalReport!=null?"Finalizando · aterrizando":snapshot==null?"Arrancando":"Buscando") : launching?"Arrancando":finalReport!=null?(string.IsNullOrEmpty(finalReport.failure)?"Finalizada · "+finalReport.reason:"Fallida · "+finalReport.failure):controlStatus;
+            GUI.Label(new Rect(264,76,width-450,34),state,smallStyle);
+            if(!string.IsNullOrEmpty(sourceDirectory) && GUI.Button(new Rect(width-180,74,160,30),"Abrir registros"))
+                Application.OpenURL(new Uri(sourceDirectory+Path.DirectorySeparatorChar).AbsoluteUri);
+            if(finalReport!=null && finalReport.metrics!=null)
+                status=$"{sentMission} · Resultado: {finalReport.metrics.found} hallazgos · {finalReport.metrics.seconds:F1} s · cobertura {finalReport.metrics.coverage:P1}";
             if(snapshot==null){GUI.Label(new Rect(22,132,width-44,40),"Esperando el primer MissionSnapshot…",sectionStyle);GUI.matrix=old;return;}
             float right=Mathf.Clamp(width*.34f,390,520); var mapPanel=new Rect(20,114,width-right-52,height-136);
             var cameraPanel=new Rect(mapPanel.xMax+12,114,right,height-136);

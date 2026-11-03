@@ -32,6 +32,25 @@ namespace LLM2Swarm
         SearchObservation experimentObservation;
         double experimentAccumulator;
         int selectedStrategy;
+        bool integratedWorkflow;
+        public string PreparedMissionSummary => activeIntent==null ? "Sin misión preparada" : $"{activeIntent.requiredFindings} objetivos · {activeIntent.maxSeconds} s · "+new[]{"Manual","Baseline A","Baseline B","PPO seed 47"}[selectedStrategy];
+        public void ConfigureIntegratedWorkflow() { integratedWorkflow=true; selectedStrategy=1; }
+        public void DrawIntegratedPreparation(Rect panel)
+        {
+            EnsureStyles();
+            DrawMissionPanel(panel);
+        }
+        public string SavePx4Request(string directory)
+        {
+            if(activeIntent==null) throw new InvalidOperationException("Interpreta y prepara una misión antes de iniciar PX4.");
+            activeIntent.Validate();
+            if(activeIntent.areas.Length!=1 || activeIntent.areas[0]!="all") throw new InvalidOperationException("PX4 admite únicamente la región completa.");
+            if(selectedStrategy<1 || selectedStrategy>3) throw new InvalidOperationException("Selecciona baseline A, B o PPO.");
+            Directory.CreateDirectory(directory);
+            string path=Path.Combine(directory,"prepared-"+Guid.NewGuid().ToString("N")+".json");
+            File.WriteAllText(path,JsonConvert.SerializeObject(new { intent=activeIntent,strategy=selectedStrategy,instruction=activeInstruction,evidence=activeEvidence },Formatting.Indented));
+            return path;
+        }
         public int gpuLayers = 99;
         GUIStyle titleStyle, sectionStyle, textStyle, smallStyle, buttonStyle, jsonStyle, instructionStyle;
         [Tooltip("Optional manually configured mission JSON")]
@@ -91,6 +110,8 @@ namespace LLM2Swarm
         }
         void PrepareProposal()
         {
+            if(integratedWorkflow && (proposedIntent==null || proposedIntent.areas.Length!=1 || proposedIntent.areas[0]!="all"))
+                throw new InvalidOperationException("Esta ejecución PX4 requiere buscar en todo el mapa. Reinterpreta, por ejemplo: Encuentra 6 objetivos en toda la región en un máximo de 120 segundos. Las misiones por sectores todavía no están integradas.");
             var intent=proposedIntent; string source=intent == null ? "" : proposalInstruction, evidence=intent == null ? "" : proposalEvidence;
             ResetMission(proposedMission);
             activeIntent=intent; activeInstruction=source; activeEvidence=evidence;
@@ -105,7 +126,7 @@ namespace LLM2Swarm
                 {
                     experimentAccumulator-=1;experiment.Step(experimentStrategy.Decide(experiment.Observe()));experimentObservation=experiment.Observe();
                 }
-                if(experiment.Finished){running=false;status=$"Experimento {experimentStrategy.Id} · {experiment.Metrics().finishReason}";}
+                if(experiment.Finished){running=false;Export();}
                 return;
             }
             accumulator += Time.unscaledDeltaTime;
@@ -116,7 +137,14 @@ namespace LLM2Swarm
         void Attempt(Action action) { try { action(); } catch (Exception e) { status = e.Message; Debug.LogException(e); } }
         void StartExperiment()
         {
-            var intent=new MissionIntent{requiredFindings=simulation.Mission.requiredFindings,maxSeconds=simulation.Mission.maxSeconds,areas=new[]{"all"}};
+            if(integratedWorkflow && activeIntent==null)
+                throw new InvalidOperationException("Interpreta una instrucción y valida la misión antes de iniciar.");
+            var intent=activeIntent ?? new MissionIntent{requiredFindings=simulation.Mission.requiredFindings,maxSeconds=simulation.Mission.maxSeconds,areas=new[]{"all"}};
+            intent.Validate();
+            if(intent.areas.Length!=1 || intent.areas[0]!="all" ||
+                (activeIntent==null && simulation.Mission.phases!=null &&
+                 (simulation.Mission.phases.Length!=1 || simulation.Mission.phases[0].area!="all")))
+                throw new ArgumentException("Las estrategias de búsqueda admiten por ahora únicamente la región completa. Prepara una misión con zona all.");
             experimentStrategy=selectedStrategy==1 ? new SystematicStrategy(false) : selectedStrategy==2 ? new SystematicStrategy(true) :
                 new PpoSeed47Strategy(File.ReadAllText(Path.Combine(Directory.GetParent(Application.dataPath).FullName,"Experiments","results","ppo","full","47","policy.json")));
             experiment=new SearchEnvironment(Scenario.From(simulation.Mission),intent);experimentObservation=experiment.Observe();experimentStrategy.Reset(experimentObservation);experimentAccumulator=0;running=true;status="Experimento Fast 2D · "+experimentStrategy.Id;
@@ -131,6 +159,18 @@ namespace LLM2Swarm
                 File.WriteAllText(Path.Combine(directory,"intent.json"),JsonConvert.SerializeObject(activeIntent,Formatting.Indented));
                 File.WriteAllText(Path.Combine(directory,"instruction.txt"),activeInstruction);
                 File.WriteAllText(Path.Combine(directory,"interpretation-evidence.txt"),activeEvidence);
+                if(experiment!=null)
+                {
+                    File.WriteAllText(Path.Combine(directory,"intent.json"),JsonConvert.SerializeObject(activeIntent ?? new MissionIntent {
+                        requiredFindings=simulation.Mission.requiredFindings,maxSeconds=simulation.Mission.maxSeconds,areas=new[]{"all"}},Formatting.Indented));
+                    File.WriteAllText(Path.Combine(directory,"execution.json"),JsonConvert.SerializeObject(new {
+                        schemaVersion=1,backend="fast2d",strategy=experimentStrategy.Id,
+                        detectionPolicy="continuous-search",decisionIntervalSeconds=1 },Formatting.Indented));
+                    File.WriteAllText(Path.Combine(directory,"summary.json"),JsonConvert.SerializeObject(experiment.Metrics(),Formatting.Indented));
+                    status="Exportado: " + directory;
+                    Debug.Log(status);
+                    return;
+                }
                 File.WriteAllText(Path.Combine(directory,"phases.json"),JsonConvert.SerializeObject(simulation.PhaseEvents,Formatting.Indented));
                 var csv = new StringBuilder("tick,seconds,coverage_fraction,found\n");
                 foreach (var s in simulation.Samples) csv.AppendFormat(CultureInfo.InvariantCulture,"{0},{1:R},{2:R},{3}\n",s.tick,s.seconds,s.coverage,s.found);
@@ -241,12 +281,21 @@ namespace LLM2Swarm
             GUI.enabled = true;
             if (interpreting) { if (GUILayout.Button("Cancelar interpretación")) interpretationCancellation?.Cancel(); }
             else GUILayout.Label(modelAvailable ? LocalInterpreter.DisplayName(selectedModel)+" · local · sin envío a Internet" : "Modelo pendiente: revisa LocalInference/README.md",smallStyle);
-            GUILayout.Label("ESTRATEGIA FAST 2D",smallStyle);
-            selectedStrategy=GUILayout.SelectionGrid(selectedStrategy,new[]{"Manual","Baseline A","Baseline B","PPO seed 47"},2,GUILayout.Height(48));
+            GUILayout.Label(integratedWorkflow ? "ESTRATEGIA DE MISIÓN PX4" : "ESTRATEGIA FAST 2D",smallStyle);
+            GUI.enabled=!running && experiment==null;
+            if(integratedWorkflow)
+                selectedStrategy=1+GUILayout.SelectionGrid(selectedStrategy-1,new[]{"Baseline A","Baseline B","PPO seed 47"},3,GUILayout.Height(48));
+            else selectedStrategy=GUILayout.SelectionGrid(selectedStrategy,new[]{"Manual","Baseline A","Baseline B","PPO seed 47"},2,GUILayout.Height(48));
+            GUI.enabled=true;
             if(selectedStrategy>0) GUILayout.Label("Al pulsar el botón verde bajo el mapa se ejecutará esta estrategia.",smallStyle);
             GUILayout.EndArea();
             GUILayout.BeginArea(new Rect(panel.x+16,panel.y+338,panel.width-32,panel.height-390));
             missionScroll = GUILayout.BeginScrollView(missionScroll);
+            if(integratedWorkflow)
+            {
+                GUILayout.Label("PX4 · búsqueda en todo el mapa (all). Los sectores norte/centro/sur aún no están disponibles.",smallStyle);
+                if(!string.IsNullOrEmpty(status)) GUILayout.Label(status,textStyle);
+            }
             if (!string.IsNullOrEmpty(interpretationMessage))
             {
                 GUILayout.Label("RESPUESTA DEL INTÉRPRETE",sectionStyle);

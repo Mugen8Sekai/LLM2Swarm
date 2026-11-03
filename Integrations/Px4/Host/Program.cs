@@ -34,6 +34,13 @@ static class Checks
         foreach(double t in new[]{0d,-1d,2d}){bool rejected=false;try{ledger.Update(MissionHost.Scenario().starts,t);}catch{rejected=true;}Assert(rejected,"timestamp rejection");}
         Assert(ledger.Metrics("").totalDistance==0,"rejected telemetry mutation");
         var scenario=MissionHost.Scenario();var intent=MissionHost.Intent();
+        var ppo=MissionHost.CreateStrategy(3);
+        var ppoEnvironment=new SearchEnvironment(scenario,intent);
+        ppo.Reset(ppoEnvironment.Observe());
+        for(int step=0;step<5&&!ppoEnvironment.Finished;step++)
+            ppoEnvironment.Step(ppo.Decide(ppoEnvironment.Observe()));
+        Assert(ppo.Id=="PPO-centralized-pilot-full-47","PPO checkpoint identity");
+        Console.WriteLine("PASS: PX4 PPO factory, checkpoint loading and five validated decisions.");
         var mission=MissionPlanner.Plan(scenario,intent);var sim=new Simulation(mission,true,false);
         var measured=new TelemetryLedger(scenario,intent);measured.Update(sim.Drones,0);
         for(int d=0;d<3;d++)sim.Assign(d,new[]{new Point(scenario.starts[d].x,35)});

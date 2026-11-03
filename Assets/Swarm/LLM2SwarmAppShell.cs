@@ -8,7 +8,8 @@ namespace LLM2Swarm
     {
         SimulationRunner fast2D;
         Px4MissionControl missionControl;
-        bool showFast2D=true;
+        SimulationRunner integrated;
+        int selectedTab;
         GUIStyle title,tab,activeTab,subtitle;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -22,8 +23,11 @@ namespace LLM2Swarm
         {
             fast2D=new GameObject("Fast 2D Lab").AddComponent<SimulationRunner>();
             missionControl=new GameObject("PX4 Mission Control (read only)").AddComponent<Px4MissionControl>();
+            integrated=new GameObject("Integrated mission").AddComponent<SimulationRunner>();
+            integrated.ConfigureIntegratedWorkflow();
             fast2D.enabled=true;
             missionControl.enabled=false;
+            integrated.enabled=false;
         }
 
         void EnsureStyles()
@@ -35,11 +39,13 @@ namespace LLM2Swarm
             activeTab=new GUIStyle(tab){normal={background=Texture2D.whiteTexture,textColor=new Color(.04f,.07f,.11f)}};
         }
 
-        void Show(bool fast)
+        void Show(int index)
         {
-            showFast2D=fast;
-            fast2D.enabled=fast;
-            missionControl.enabled=!fast;
+            selectedTab=index;
+            fast2D.enabled=index==0;
+            missionControl.enabled=index==1 || index==2;
+            missionControl.missionEditor=index==2 ? integrated : null;
+            integrated.enabled=false;
         }
 
         void OnGUI()
@@ -50,10 +56,11 @@ namespace LLM2Swarm
             float width=Screen.width/scale;
             GUI.color=new Color(.025f,.04f,.07f);GUI.DrawTexture(new Rect(0,0,width,72),Texture2D.whiteTexture);GUI.color=Color.white;
             GUI.Label(new Rect(22,8,310,30),"LLM2Swarm",title);
-            GUI.Label(new Rect(22,37,360,22),"Preparación y visualización · backends independientes",subtitle);
+            GUI.Label(new Rect(22,37,360,22),selectedTab==2 ? "Producto · instrucción → misión → resultados" : "Laboratorios de experimentación",subtitle);
             float tabWidth=190;
-            if(GUI.Button(new Rect(width-2*tabWidth-30,16,tabWidth,38),"Fast 2D / Lab",showFast2D?activeTab:tab))Show(true);
-            if(GUI.Button(new Rect(width-tabWidth-18,16,tabWidth,38),"PX4 / Mission Control",showFast2D?tab:activeTab))Show(false);
+            string[] labels={"Fast 2D / Lab","PX4 / Mission Control","Misión integrada"};
+            for(int i=0;i<labels.Length;i++)
+                if(GUI.Button(new Rect(width-(3-i)*(tabWidth+8)-10,16,tabWidth,38),labels[i],selectedTab==i?activeTab:tab))Show(i);
             GUI.matrix=original;
         }
     }
