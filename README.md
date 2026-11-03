@@ -1,5 +1,10 @@
 # LLM2Swarm — primera simulación 2D
 
+La **Fase 1** está congelada en la etiqueta `fase-1` (commit `093eade`).
+La **Fase 2** comienza con el [plan de integración](FASE_2.md): un único flujo
+de misión para el LLM local, las estrategias de búsqueda y los backends 2D/PX4.
+La descripción siguiente recoge el prototipo y se actualizará durante la integración.
+
 Proyecto Unity **6000.6.0f1**, plantilla URP 2D. Abrir `Assets/Scenes/SampleScene.unity` y pulsar Play. Se puede iniciar la misión manual o escribir una instrucción y pulsar **Interpretar instrucción → Validar y preparar → Iniciar**. El modelo local Ministral 3B está integrado mediante un proceso auxiliar de llama.cpp, sin servicios externos ni claves. Consultar [instalación y evaluación local](LocalInference/README.md). `Assets/Swarm/ManualSweep.json` conserva el ejemplo manual inicial.
 
 ## Misión manual
