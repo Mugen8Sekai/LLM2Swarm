@@ -1,0 +1,7 @@
+{
+  "verifiedFlights": 60,
+  "pairedScenarios": 20,
+  "intentsAndStrategiesMatch": true,
+  "cleanShutdowns": true,
+  "ppoCheckpointsMatch": true
+}

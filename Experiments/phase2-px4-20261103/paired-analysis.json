@@ -1,0 +1,73 @@
+{
+  "method": "paired percentile bootstrap by seed; 20000 draws; rng 20261103",
+  "comparisons": [
+    {
+      "comparison": "PPO - A",
+      "pairedSeeds": 20,
+      "metrics": {
+        "restrictedSeconds": {
+          "meanDifference": -23.647799999999997,
+          "bootstrap95": [
+            -34.525999999999996,
+            -12.164800000000003
+          ]
+        },
+        "distance": {
+          "meanDifference": -61.3959145222394,
+          "bootstrap95": [
+            -116.58996943736577,
+            -2.615966540476845
+          ]
+        },
+        "coverage": {
+          "meanDifference": -0.00033333333333331885,
+          "bootstrap95": [
+            -0.06493749999999998,
+            0.06883333333333337
+          ]
+        },
+        "success": {
+          "meanDifference": 0.0,
+          "bootstrap95": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "comparison": "PPO - B",
+      "pairedSeeds": 20,
+      "metrics": {
+        "restrictedSeconds": {
+          "meanDifference": -38.5062,
+          "bootstrap95": [
+            -48.23859999999999,
+            -28.556599999999996
+          ]
+        },
+        "distance": {
+          "meanDifference": -125.12643881178217,
+          "bootstrap95": [
+            -176.03049613809065,
+            -73.54856245888017
+          ]
+        },
+        "coverage": {
+          "meanDifference": -0.010437499999999997,
+          "bootstrap95": [
+            -0.07502083333333331,
+            0.05410416666666666
+          ]
+        },
+        "success": {
+          "meanDifference": 0.0,
+          "bootstrap95": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  ]
+}

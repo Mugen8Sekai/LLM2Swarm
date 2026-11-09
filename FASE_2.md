@@ -1,5 +1,10 @@
 # Fase 2: sistema integrado de misiones
 
+Estado a 3 de noviembre de 2026: recorrido PX4 integrado con A/B/PPO y evaluación
+de 60 vuelos completada. Véase el [informe de implementación y resultados](Experiments/phase2-px4-20261103/REPORT.md).
+Las entregas siguientes conservan el plan inicial; el informe distingue lo implementado
+de lo pendiente.
+
 ## Punto de partida
 
 La Fase 1 queda conservada en el commit `093eade` y la etiqueta `fase-1`.
