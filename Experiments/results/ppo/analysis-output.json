@@ -1,0 +1,459 @@
+{
+  "overall": {
+    "A-systematic": {
+      "n": 4800,
+      "success": 0.8525,
+      "firstTimeConditional": 5.684333418036501,
+      "firstTimeObserved": 4800,
+      "kTimeConditional": 32.241300577310554,
+      "kTimeObserved": 4092,
+      "restrictedTime": 36.335708742157244,
+      "coverage": 0.5727833333333333,
+      "foundFraction": 0.6227256944444444,
+      "redundancy": 3014.6746172524677,
+      "exposure": 3148.9426188553557,
+      "distance": 417.26229419552925,
+      "distanceByDrone": [
+        138.45295242280292,
+        139.29328998028464,
+        139.5160517924415
+      ],
+      "newAreaByDrone": [
+        398.76958333333334,
+        496.32604166666664,
+        479.584375
+      ],
+      "findingsByDrone": [
+        2.2241666666666666,
+        3.0010416666666666,
+        2.9610416666666666
+      ],
+      "idleSeconds": null,
+      "voluntaryWaitFraction": null,
+      "rewardComponents": null
+    },
+    "B-coordinated": {
+      "n": 4800,
+      "success": 0.8302083333333333,
+      "firstTimeConditional": 7.53630690679743,
+      "firstTimeObserved": 4798,
+      "kTimeConditional": 34.2804271101185,
+      "kTimeObserved": 3985,
+      "restrictedTime": 38.6473962570463,
+      "coverage": 0.5656641493055555,
+      "foundFraction": 0.6087413194444444,
+      "redundancy": 3170.5326793029453,
+      "exposure": 3303.0920763564513,
+      "distance": 441.7124011556647,
+      "distanceByDrone": [
+        147.10289269600906,
+        146.82729337285963,
+        147.78221508679275
+      ],
+      "newAreaByDrone": [
+        444.26916666666665,
+        436.68604166666665,
+        476.63875
+      ],
+      "findingsByDrone": [
+        2.7491666666666665,
+        2.526875,
+        2.7266666666666666
+      ],
+      "idleSeconds": null,
+      "voluntaryWaitFraction": null,
+      "rewardComponents": null
+    },
+    "full-11": {
+      "n": 4800,
+      "success": 0.810625,
+      "firstTimeConditional": 4.095333394358556,
+      "firstTimeObserved": 4800,
+      "kTimeConditional": 34.08018554932077,
+      "kTimeObserved": 3891,
+      "restrictedTime": 38.98875041091814,
+      "coverage": 0.5776761284722222,
+      "foundFraction": 0.6146875,
+      "redundancy": 3267.8574928352205,
+      "exposure": 3403.2997652546674,
+      "distance": 455.4049058884366,
+      "distanceByDrone": [
+        151.96839480910262,
+        152.3153666575258,
+        151.12114442180857
+      ],
+      "newAreaByDrone": [
+        459.416875,
+        491.05041666666665,
+        435.9554166666667
+      ],
+      "findingsByDrone": [
+        2.57,
+        2.9004166666666666,
+        2.60375
+      ],
+      "idleSeconds": [
+        0.0015625000232830644,
+        0.0,
+        0.0
+      ],
+      "voluntaryWaitFraction": 0.0,
+      "rewardComponents": [
+        0.9399305555555537,
+        -0.04687125041500276,
+        0.005643427951388983
+      ]
+    },
+    "full-29": {
+      "n": 4800,
+      "success": 0.8204166666666667,
+      "firstTimeConditional": 4.506583400486658,
+      "firstTimeObserved": 4800,
+      "kTimeConditional": 34.00185423884531,
+      "kTimeObserved": 3938,
+      "restrictedTime": 38.72068791511934,
+      "coverage": 0.5768038194444445,
+      "foundFraction": 0.6172569444444443,
+      "redundancy": 3165.915991722044,
+      "exposure": 3301.148910260042,
+      "distance": 440.5477709152773,
+      "distanceByDrone": [
+        139.88710126201434,
+        149.76561777931187,
+        150.89505187395352
+      ],
+      "newAreaByDrone": [
+        446.04854166666667,
+        479.9508333333333,
+        458.32979166666667
+      ],
+      "findingsByDrone": [
+        2.5720833333333335,
+        2.8385416666666665,
+        2.6858333333333335
+      ],
+      "idleSeconds": [
+        3.0656875441921874,
+        0.11583333356926838,
+        0.0
+      ],
+      "voluntaryWaitFraction": 0.24563861947348534,
+      "rewardComponents": [
+        0.9429166666666631,
+        -0.0465682643142779,
+        0.005634704861111236
+      ]
+    },
+    "full-47": {
+      "n": 4800,
+      "success": 0.84125,
+      "firstTimeConditional": 4.207250062692911,
+      "firstTimeObserved": 4800,
+      "kTimeConditional": 31.97927239309736,
+      "kTimeObserved": 4038,
+      "restrictedTime": 36.427562900693154,
+      "coverage": 0.5777744791666667,
+      "foundFraction": 0.6234722222222222,
+      "redundancy": 3037.1375533716955,
+      "exposure": 3172.6034301734826,
+      "distance": 423.5285429974039,
+      "distanceByDrone": [
+        141.65821094598076,
+        139.39203067759132,
+        142.47830137383215
+      ],
+      "newAreaByDrone": [
+        436.15520833333335,
+        458.30375,
+        492.19979166666667
+      ],
+      "findingsByDrone": [
+        2.5483333333333333,
+        2.645208333333333,
+        2.9927083333333333
+      ],
+      "idleSeconds": [
+        0.0,
+        0.03754166722608109,
+        0.0
+      ],
+      "voluntaryWaitFraction": 0.0004941627030699858,
+      "rewardComponents": [
+        0.949201388888885,
+        -0.04436984417429523,
+        0.005644411458333281
+      ]
+    },
+    "no-coverage-11": {
+      "n": 4800,
+      "success": 0.8275,
+      "firstTimeConditional": 4.34900006480515,
+      "firstTimeObserved": 4800,
+      "kTimeConditional": 32.164804104670566,
+      "kTimeObserved": 3972,
+      "restrictedTime": 37.09137539661489,
+      "coverage": 0.5769375868055556,
+      "foundFraction": 0.6219878472222222,
+      "redundancy": 3084.4982826134005,
+      "exposure": 3219.7633054623398,
+      "distance": 430.38515986578597,
+      "distanceByDrone": [
+        143.53668986918228,
+        144.3324629987393,
+        142.51600699786172
+      ],
+      "newAreaByDrone": [
+        375.81375,
+        485.221875,
+        523.6145833333334
+      ],
+      "findingsByDrone": [
+        2.1979166666666665,
+        2.8960416666666666,
+        3.0722916666666666
+      ],
+      "idleSeconds": [
+        0.033333330104748406,
+        0.1441874984232709,
+        0.25414583339511104
+      ],
+      "voluntaryWaitFraction": 0.045230161668517836,
+      "rewardComponents": [
+        0.9475434027777755,
+        -0.044930937912477396,
+        0.0
+      ]
+    },
+    "no-coverage-29": {
+      "n": 4800,
+      "success": 0.8420833333333333,
+      "firstTimeConditional": 4.381083398616562,
+      "firstTimeObserved": 4800,
+      "kTimeConditional": 32.78411726195334,
+      "kTimeObserved": 4042,
+      "restrictedTime": 37.08195874433654,
+      "coverage": 0.5761755208333333,
+      "foundFraction": 0.6250868055555556,
+      "redundancy": 3101.4260965346407,
+      "exposure": 3236.508223547521,
+      "distance": 426.5405244947586,
+      "distanceByDrone": [
+        144.9802160060926,
+        141.31717543791396,
+        140.24313305075125
+      ],
+      "newAreaByDrone": [
+        475.57708333333335,
+        447.466875,
+        459.77729166666666
+      ],
+      "findingsByDrone": [
+        2.7916666666666665,
+        2.714375,
+        2.702916666666667
+      ],
+      "idleSeconds": [
+        0.0,
+        0.5579375083139166,
+        0.5579375083139166
+      ],
+      "voluntaryWaitFraction": 0.09826705949091441,
+      "rewardComponents": [
+        0.9505034722222185,
+        -0.04481102473735596,
+        0.0
+      ]
+    },
+    "no-coverage-47": {
+      "n": 4800,
+      "success": 0.8227083333333334,
+      "firstTimeConditional": 4.418583399175356,
+      "firstTimeObserved": 4800,
+      "kTimeConditional": 31.47080320382109,
+      "kTimeObserved": 3949,
+      "restrictedTime": 37.003792052476975,
+      "coverage": 0.56840078125,
+      "foundFraction": 0.6195572916666666,
+      "redundancy": 3060.5301982205115,
+      "exposure": 3193.746387402907,
+      "distance": 429.18250499965586,
+      "distanceByDrone": [
+        144.2418646237272,
+        142.54411245235454,
+        142.39652792357583
+      ],
+      "newAreaByDrone": [
+        477.74083333333334,
+        440.7085416666667,
+        445.7125
+      ],
+      "findingsByDrone": [
+        2.803125,
+        2.547083333333333,
+        2.7764583333333333
+      ],
+      "idleSeconds": [
+        0.0,
+        0.1844999885931611,
+        0.3834999915584922
+      ],
+      "voluntaryWaitFraction": 0.056203239999188984,
+      "rewardComponents": [
+        0.9452690972222175,
+        -0.0448751566545059,
+        0.0
+      ]
+    }
+  },
+  "training": {
+    "full-11": {
+      "seed": 11,
+      "steps": 262144,
+      "episodes": 6517,
+      "selectedStep": 262144,
+      "initial": {
+        "success": 0.8020833333333334,
+        "restrictedTime": 43.22395880046921,
+        "episodes": 96
+      },
+      "selectedSuccess": 0.8333333333333334,
+      "selectedRestrictedTime": 36.868750400375575,
+      "wallSeconds": 78.15076219999901,
+      "rolloutSeconds": 58.33210119996511,
+      "updateSeconds": 13.435993199927907,
+      "validationSeconds": 5.403355599999486,
+      "trainingTransitionsPerSecond": 3652.653761981324,
+      "parentCpuSeconds": 57.90625,
+      "environmentCpuSeconds": 21.328125,
+      "peakCombinedRssBytes": 979808256,
+      "gpuUsed": false
+    },
+    "full-29": {
+      "seed": 29,
+      "steps": 262144,
+      "episodes": 6576,
+      "selectedStep": 65536,
+      "initial": {
+        "success": 0.7916666666666666,
+        "restrictedTime": 41.61562541523017,
+        "episodes": 96
+      },
+      "selectedSuccess": 0.8333333333333334,
+      "selectedRestrictedTime": 36.64479205439178,
+      "wallSeconds": 81.67400430000271,
+      "rolloutSeconds": 61.67943700005708,
+      "updateSeconds": 13.603296899986162,
+      "validationSeconds": 5.476741499995114,
+      "trainingTransitionsPerSecond": 3482.1264640583067,
+      "parentCpuSeconds": 60.734375,
+      "environmentCpuSeconds": 22.375,
+      "peakCombinedRssBytes": 979484672,
+      "gpuUsed": false
+    },
+    "full-47": {
+      "seed": 47,
+      "steps": 262144,
+      "episodes": 6522,
+      "selectedStep": 196608,
+      "initial": {
+        "success": 0.6458333333333334,
+        "restrictedTime": 48.31666696754595,
+        "episodes": 96
+      },
+      "selectedSuccess": 0.8333333333333334,
+      "selectedRestrictedTime": 34.39791703022396,
+      "wallSeconds": 89.12797309999587,
+      "rolloutSeconds": 66.73718920000101,
+      "updateSeconds": 15.311444600003597,
+      "validationSeconds": 6.135132700001122,
+      "trainingTransitionsPerSecond": 3194.9831198771926,
+      "parentCpuSeconds": 68.046875,
+      "environmentCpuSeconds": 22.65625,
+      "peakCombinedRssBytes": 980328448,
+      "gpuUsed": false
+    },
+    "no-coverage-11": {
+      "seed": 11,
+      "steps": 262144,
+      "episodes": 6597,
+      "selectedStep": 196608,
+      "initial": {
+        "success": 0.8020833333333334,
+        "restrictedTime": 43.22395880046921,
+        "episodes": 96
+      },
+      "selectedSuccess": 0.8020833333333334,
+      "selectedRestrictedTime": 36.2687503634952,
+      "wallSeconds": 86.73093289999815,
+      "rolloutSeconds": 65.32998089998,
+      "updateSeconds": 14.69546119998995,
+      "validationSeconds": 5.768777599994792,
+      "trainingTransitionsPerSecond": 3275.7582228976958,
+      "parentCpuSeconds": 66.15625,
+      "environmentCpuSeconds": 23.203125,
+      "peakCombinedRssBytes": 979607552,
+      "gpuUsed": false
+    },
+    "no-coverage-29": {
+      "seed": 29,
+      "steps": 262144,
+      "episodes": 6690,
+      "selectedStep": 196608,
+      "initial": {
+        "success": 0.7916666666666666,
+        "restrictedTime": 41.61562541523017,
+        "episodes": 96
+      },
+      "selectedSuccess": 0.8645833333333334,
+      "selectedRestrictedTime": 35.26354207106245,
+      "wallSeconds": 81.33059939999657,
+      "rolloutSeconds": 61.235884300025646,
+      "updateSeconds": 13.66878110000107,
+      "validationSeconds": 5.504115699986869,
+      "trainingTransitionsPerSecond": 3499.701902411896,
+      "parentCpuSeconds": 61.515625,
+      "environmentCpuSeconds": 21.625,
+      "peakCombinedRssBytes": 979730432,
+      "gpuUsed": false
+    },
+    "no-coverage-47": {
+      "seed": 47,
+      "steps": 262144,
+      "episodes": 6446,
+      "selectedStep": 262144,
+      "initial": {
+        "success": 0.6458333333333334,
+        "restrictedTime": 48.31666696754595,
+        "episodes": 96
+      },
+      "selectedSuccess": 0.7916666666666666,
+      "selectedRestrictedTime": 37.99375037988648,
+      "wallSeconds": 80.25470499999938,
+      "rolloutSeconds": 59.89548359998298,
+      "updateSeconds": 13.620977699894866,
+      "validationSeconds": 5.744248799986963,
+      "trainingTransitionsPerSecond": 3565.7864288475425,
+      "parentCpuSeconds": 60.125,
+      "environmentCpuSeconds": 21.734375,
+      "peakCombinedRssBytes": 980692992,
+      "gpuUsed": false
+    }
+  },
+  "diagnostics": {
+    "full-11": {
+      "spatialFindingPermutationEligible": 115,
+      "spatialFindingPermutationChanged": 0,
+      "changedFraction": 0.0
+    },
+    "full-29": {
+      "spatialFindingPermutationEligible": 119,
+      "spatialFindingPermutationChanged": 0,
+      "changedFraction": 0.0
+    },
+    "full-47": {
+      "spatialFindingPermutationEligible": 111,
+      "spatialFindingPermutationChanged": 0,
+      "changedFraction": 0.0
+    }
+  }
+}

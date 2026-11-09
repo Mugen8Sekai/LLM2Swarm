@@ -1,0 +1,34 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b10993-583926e3a
+model      : C:\Users\mugen\LLM2Swarm\LocalInference\models\Ministral-3-3B-Instruct-2512-Q4_K_M.gguf
+ftype      : Q4_K - Medium
+modalities : text
+using custom system prompt
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> Encuentra 6 objetivos en toda la región en un máximo de 120 segundos.
+{"status":"proposal","message":"Se propone buscar **6 objetivos** en toda la región (**all**) con límite de **120 segundos**.","mission":{"requiredFindings":6,"maxSeconds":120,"areas":["all"]}}
+
+[ Prompt: 6757.8 t/s | Generation: 191.3 t/s ]
+
+
+Exiting...

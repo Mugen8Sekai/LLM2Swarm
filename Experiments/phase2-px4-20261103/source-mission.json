@@ -1,0 +1,12 @@
+{
+  "intent": {
+    "requiredFindings": 6,
+    "maxSeconds": 120.0,
+    "areas": [
+      "all"
+    ]
+  },
+  "strategy": 3,
+  "instruction": "Encuentra 6 objetivos en toda la región en un máximo de 120 segundos.",
+  "evidence": "C:/Users/mugen/AppData/LocalLow/DefaultCompany/LLM2Swarm\\Interpretations\\7c44d40ed58c4102840e801c60bb5265"
+}

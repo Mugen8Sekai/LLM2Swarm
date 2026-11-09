@@ -1,0 +1,28 @@
+{
+  "split": "pilot-validation",
+  "seedRange": "100000..100099",
+  "sourceSha256": "70a9f9640221652a95db25ea5d074e4dedd5840d8cc049678d83294258d02a50",
+  "config": {
+    "columns": 6,
+    "rows": 4,
+    "decisionSeconds": 1.0
+  },
+  "targets": 12,
+  "kValues": [
+    3,
+    12
+  ],
+  "deadlines": [
+    60,
+    120
+  ],
+  "distributions": [
+    "uniform",
+    "clustered"
+  ],
+  "starts": [
+    "common",
+    "dispersed"
+  ],
+  "trainingPerformed": false
+}

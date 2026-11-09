@@ -1,0 +1,65 @@
+{
+  "protocol": "in-process",
+  "repeats": [
+    {
+      "episodes": 100,
+      "transitions": 11800,
+      "seconds": 0.5859059,
+      "transitionsPerSecond": 20139.226913107086
+    },
+    {
+      "episodes": 100,
+      "transitions": 11800,
+      "seconds": 0.2887413,
+      "transitionsPerSecond": 40867.00387717041
+    },
+    {
+      "episodes": 100,
+      "transitions": 11800,
+      "seconds": 0.2484109,
+      "transitionsPerSecond": 47501.88397302537
+    },
+    {
+      "episodes": 100,
+      "transitions": 11800,
+      "seconds": 0.2250955,
+      "transitionsPerSecond": 52422.14755768324
+    },
+    {
+      "episodes": 100,
+      "transitions": 11800,
+      "seconds": 0.2206332,
+      "transitionsPerSecond": 53482.33451296629
+    }
+  ],
+  "terminalMetricsFirstEpisode": {
+    "finishReason": "search_exhausted",
+    "success": false,
+    "seconds": 118.00000175833702,
+    "coverage": 1.0,
+    "foundFraction": 1.0,
+    "totalDistance": 1344.0318901122077,
+    "exposureAreaSeconds": 10222.10015232116,
+    "redundantAreaSeconds": 9986.900148816407,
+    "firstFindingSeconds": 1.0000000149011612,
+    "kFindingSeconds": null,
+    "found": 12,
+    "distanceByDrone": [
+      438.44392666782153,
+      447.82180335758915,
+      457.76616008679713
+    ],
+    "newAreaByDrone": [
+      566.0,
+      1061.0,
+      773.0
+    ],
+    "findingsByDrone": [
+      3,
+      3,
+      6
+    ]
+  },
+  "includes": "reset, observations, deterministic dispatcher, metrics; excludes serialization and IPC",
+  "training": false
+}

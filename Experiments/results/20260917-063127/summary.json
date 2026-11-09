@@ -1,0 +1,683 @@
+{
+  "episodes": 3200,
+  "transitions": 118487,
+  "seconds": 2.7908094,
+  "episodesPerSecond": 1146.620597362099,
+  "transitionsPerSecond": 42456.13432860475,
+  "summary": [
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.01,
+      "meanCoverage": 0.23845833333333333,
+      "meanRestrictedTime": 13.30500019825995,
+      "meanDistance": 154.27676876177492
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.0,
+      "meanCoverage": 0.23286250000000008,
+      "meanRestrictedTime": 14.328000213503838,
+      "meanDistance": 166.61532913789804
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.01,
+      "meanCoverage": 0.23845833333333333,
+      "meanRestrictedTime": 13.30500019825995,
+      "meanDistance": 154.27676876177492
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.0,
+      "meanCoverage": 0.23286250000000008,
+      "meanRestrictedTime": 14.328000213503838,
+      "meanDistance": 166.61532913789804
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 0.32,
+      "meanFound": 10.78,
+      "meanCoverage": 0.8743999999999988,
+      "meanRestrictedTime": 58.2780002604425,
+      "meanDistance": 667.9951806778757
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 0.16,
+      "meanFound": 10.12,
+      "meanCoverage": 0.8260666666666654,
+      "meanRestrictedTime": 59.149000121429566,
+      "meanDistance": 676.6416224462928
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.9165666666666665,
+      "meanRestrictedTime": 61.76500092037022,
+      "meanDistance": 707.6352117108042
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.9165583333333335,
+      "meanRestrictedTime": 65.7910009803623,
+      "meanDistance": 749.6189425838426
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.0,
+      "meanCoverage": 0.23687499999999992,
+      "meanRestrictedTime": 10.5070001565665,
+      "meanDistance": 123.00430160216872
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.0,
+      "meanCoverage": 0.2366875,
+      "meanRestrictedTime": 13.628000203073025,
+      "meanDistance": 156.66934986363006
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.0,
+      "meanCoverage": 0.23687499999999992,
+      "meanRestrictedTime": 10.5070001565665,
+      "meanDistance": 123.00430160216872
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.0,
+      "meanCoverage": 0.2366875,
+      "meanRestrictedTime": 13.628000203073025,
+      "meanDistance": 156.66934986363006
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 0.33,
+      "meanFound": 10.91,
+      "meanCoverage": 0.879229166666666,
+      "meanRestrictedTime": 57.72800025224686,
+      "meanDistance": 661.6794689838118
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 0.27,
+      "meanFound": 10.51,
+      "meanCoverage": 0.8515166666666655,
+      "meanRestrictedTime": 58.837000215128064,
+      "meanDistance": 671.0908412859342
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.9147208333333333,
+      "meanRestrictedTime": 61.387000914737584,
+      "meanDistance": 702.6941870565589
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.9137875000000001,
+      "meanRestrictedTime": 63.24500094242394,
+      "meanDistance": 719.7868450329785
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 0.99,
+      "meanFound": 3.0,
+      "meanCoverage": 0.2894125000000001,
+      "meanRestrictedTime": 16.92600024327636,
+      "meanDistance": 195.37957269267815
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.02,
+      "meanCoverage": 0.2825666666666665,
+      "meanRestrictedTime": 18.320000272989272,
+      "meanDistance": 211.64051497378915
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.01,
+      "meanCoverage": 0.2897916666666667,
+      "meanRestrictedTime": 16.95600025266409,
+      "meanDistance": 195.72623967436738
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.02,
+      "meanCoverage": 0.2825666666666665,
+      "meanRestrictedTime": 18.320000272989272,
+      "meanDistance": 211.64051497378915
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 0.39,
+      "meanFound": 10.39,
+      "meanCoverage": 0.8223291666666657,
+      "meanRestrictedTime": 54.47000026628375,
+      "meanDistance": 624.4231965592578
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 0.43,
+      "meanFound": 9.84,
+      "meanCoverage": 0.7767083333333324,
+      "meanRestrictedTime": 55.331000314876434,
+      "meanDistance": 632.9896088336045
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.8621000000000001,
+      "meanRestrictedTime": 57.625000858679414,
+      "meanDistance": 660.6725587693003
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.8403916666666668,
+      "meanRestrictedTime": 60.00100089408457,
+      "meanDistance": 684.8696062607861
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.01,
+      "meanCoverage": 0.2642374999999999,
+      "meanRestrictedTime": 12.749000189974904,
+      "meanDistance": 148.17745102678722
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.03,
+      "meanCoverage": 0.28045416666666656,
+      "meanRestrictedTime": 16.908000251948835,
+      "meanDistance": 193.73299750653769
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.01,
+      "meanCoverage": 0.2642374999999999,
+      "meanRestrictedTime": 12.749000189974904,
+      "meanDistance": 148.17745102678722
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 3.03,
+      "meanCoverage": 0.28045416666666656,
+      "meanRestrictedTime": 16.908000251948835,
+      "meanDistance": 193.73299750653769
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 0.45,
+      "meanFound": 10.7,
+      "meanCoverage": 0.843408333333333,
+      "meanRestrictedTime": 54.959000327214596,
+      "meanDistance": 630.11082594804
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 60,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 0.48,
+      "meanFound": 10.3,
+      "meanCoverage": 0.7946041666666659,
+      "meanRestrictedTime": 54.53100034765899,
+      "meanDistance": 621.5988346553487
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "A-systematic"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.8744208333333335,
+      "meanRestrictedTime": 58.08800086557865,
+      "meanDistance": 665.7108745870515
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 120,
+        "strategy": "B-coordinated"
+      },
+      "n": 100,
+      "successRate": 1.0,
+      "meanFound": 12.0,
+      "meanCoverage": 0.8418750000000002,
+      "meanRestrictedTime": 57.825000861659646,
+      "meanDistance": 658.0468389475158
+    }
+  ],
+  "paired": [
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 3,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 1.0230000152438878,
+      "approximate95Lower": -1.003285270349325,
+      "approximate95Upper": 3.0492853008371004
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 3,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 1.0230000152438878,
+      "approximate95Lower": -1.003285270349325,
+      "approximate95Upper": 3.0492853008371004
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 12,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 0.8709998609870673,
+      "approximate95Lower": 0.0863366713474556,
+      "approximate95Upper": 1.655663050626679
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "common",
+        "k": 12,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 4.026000059992075,
+      "approximate95Lower": 2.8733790875856,
+      "approximate95Upper": 5.17862103239855
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 3.121000046506524,
+      "approximate95Lower": 1.5444816918570168,
+      "approximate95Upper": 4.697518401156032
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 3.121000046506524,
+      "approximate95Lower": 1.5444816918570168,
+      "approximate95Upper": 4.697518401156032
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 1.1089999628812075,
+      "approximate95Lower": 0.0996283965938598,
+      "approximate95Upper": 2.118371529168555
+    },
+    {
+      "condition": {
+        "distribution": "uniform",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 1.8580000276863575,
+      "approximate95Lower": 0.4257807405753926,
+      "approximate95Upper": 3.2902193147973224
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 3,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 1.3940000297129154,
+      "approximate95Lower": -1.9803119260907462,
+      "approximate95Upper": 4.768311985516577
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 3,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 1.3640000203251839,
+      "approximate95Lower": -2.02589305459281,
+      "approximate95Upper": 4.7538930952431775
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 12,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 0.8610000485926866,
+      "approximate95Lower": -1.4797426713297344,
+      "approximate95Upper": 3.2017427685151074
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "common",
+        "k": 12,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 2.376000035405159,
+      "approximate95Lower": -0.39525443576741814,
+      "approximate95Upper": 5.147254506577736
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 4.15900006197393,
+      "approximate95Lower": 1.9921464618135234,
+      "approximate95Upper": 6.325853662134336
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 3,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": 4.15900006197393,
+      "approximate95Lower": 1.9921464618135234,
+      "approximate95Upper": 6.325853662134336
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 60
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": -0.42799997955560687,
+      "approximate95Lower": -2.1663864297083317,
+      "approximate95Upper": 1.310386470597118
+    },
+    {
+      "condition": {
+        "distribution": "clustered",
+        "layout": "dispersed",
+        "k": 12,
+        "deadline": 120
+      },
+      "pairedSeeds": 100,
+      "restrictedTimeBminusA": -0.2630000039190054,
+      "approximate95Lower": -2.483710166275481,
+      "approximate95Upper": 1.9577101584374699
+    }
+  ]
+}

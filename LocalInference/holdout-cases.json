@@ -1,0 +1,14 @@
+[
+  {"text":"Que los tres peinen la parte de arriba y luego la de en medio. Paramos a los cuatro hallazgos o al minuto y medio.","status":"proposal","count":4,"seconds":90,"areas":["north","center"]},
+  {"text":"Localiza 3 objetos únicamente en la franja central; no tardes más de 45 segundos.","status":"proposal","count":3,"seconds":45,"areas":["center"]},
+  {"text":"Quiero encontrar 11 objetos. Empieza abajo, sigue por el centro y acaba arriba. Ocho minutos como máximo.","status":"proposal","count":11,"seconds":480,"areas":["south","center","north"]},
+  {"text":"Busca 2 objetos en toda la zona, sin cambiar ni la altura ni la velocidad.","status":"proposal","count":2,"seconds":600,"areas":["all"]},
+  {"text":"Encuentra 1 objetivo arriba. Como mucho, un cuarto de minuto.","status":"proposal","count":1,"seconds":15,"areas":["north"]},
+  {"text":"Peina el mapa entero para localizar nueve objetivos en 75 segundos.","status":"proposal","count":9,"seconds":75,"areas":["all"]},
+  {"text":"Encuentra tres objetos, pero no entres en la franja del medio al desplazarte.","status":"unsupported"},
+  {"text":"Localiza dos personas que se están moviendo.","status":"unsupported"},
+  {"text":"Encuentra cinco y después aterriza en el origen.","status":"unsupported"},
+  {"text":"Primero rastrea la zona con el sensor infrarrojo y encuentra cuatro objetos.","status":"unsupported"},
+  {"text":"Busca tres por donde te señalé antes.","status":"clarification"},
+  {"text":"No salgas del norte para buscar dos objetos, pero luego busca también por abajo.","status":"clarification"}
+]

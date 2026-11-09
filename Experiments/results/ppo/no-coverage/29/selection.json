@@ -1,0 +1,32 @@
+[
+  {
+    "step": 0,
+    "success": 0.7916666666666666,
+    "restrictedTime": 41.61562541523017,
+    "episodes": 96
+  },
+  {
+    "step": 65536,
+    "success": 0.6875,
+    "restrictedTime": 41.11458356414611,
+    "episodes": 96
+  },
+  {
+    "step": 131072,
+    "success": 0.8541666666666666,
+    "restrictedTime": 36.311458744031064,
+    "episodes": 96
+  },
+  {
+    "step": 196608,
+    "success": 0.8645833333333334,
+    "restrictedTime": 35.26354207106245,
+    "episodes": 96
+  },
+  {
+    "step": 262144,
+    "success": 0.8333333333333334,
+    "restrictedTime": 36.736458731737606,
+    "episodes": 96
+  }
+]

@@ -1,0 +1,5 @@
+.runtime/
+bin/
+obj/
+__pycache__/
+!Host/Host.csproj

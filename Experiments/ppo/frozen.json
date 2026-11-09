@@ -1,0 +1,9 @@
+{
+  "Experiments/pilot-20260917/config.json": "d05bb58ad3bde79907f57c89d3f295ee5bf0f3873995e58d418a23b4462a6d1b",
+  "Assets/Swarm/SearchExperiment.cs": "acffd0730cff4bfa5043172d3a4b2f5ac505d1af5288ffe136d8a2e51943ce95",
+  "Tests/SimulationChecks/SearchPilot.cs": "d9316a8e9ec61776d493d586562f957d8ce987c03a3bc3229129d37a9af02e8c",
+  "Experiments/adapter.py": "81a82c7c3d6abd5f6937e5ea3d294b654cde0936dc88370b39adc73a958e25ae",
+  "Experiments/pilot-20260917/summary.json": "a623a2c457ec94ffc77d7e293353046224260fbe6fd8de779869d86ede8b6f86",
+  "Assets/Swarm/MissionIntent.cs": "e79fb45f441653f76862b1144cf25f822758f5e41671893ea5f4bcc5aed05843",
+  "Assets/Swarm/Simulation.cs": "1b2a9731a6fa322f2a353fb7a9ec593374c4e4f0a895bed31c180007e90c337d"
+}

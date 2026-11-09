@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "createdUtc": "2026-11-03T14:47:08.310253+00:00",
+  "sourceSha256": "b0fa78e651b167222dd9795eb23cb9acd1387eafc9df949a967119f594f0025f",
+  "provenance": {
+    "commit": "5b456cbe4075e7978191e3f050d7eaa33b8eaf8d",
+    "sha256": {
+      "Assets/Swarm/LLM2SwarmAppShell.cs": "f8991d3176b459ce1839bf152fa3d37b158f931a3a41855a6a3bbac742709f01",
+      "Assets/Swarm/LocalInterpreter.cs": "4710c1f533b6db00463bb4f2e16d9a5b3343e06b2efc20d0c3c3837dbc35a6e9",
+      "Assets/Swarm/ManualSweep.json": "967714eebd1ff9913e371226e4d82b701793ff6a0f7782ed08da04a2dbdc16f3",
+      "Assets/Swarm/MissionIntent.cs": "e79fb45f441653f76862b1144cf25f822758f5e41671893ea5f4bcc5aed05843",
+      "Assets/Swarm/MissionJson.cs": "e1d3216f4ab4782fe8e24595991fad61842c187a7525fbf526e1222fc606f3e2",
+      "Assets/Swarm/PpoSeed47Strategy.cs": "7de112da6bf1a178b2ef7920947be39268323146af061dbb9d7f2fdb3bf4daaf",
+      "Assets/Swarm/Px4MissionControl.cs": "22550208081c6fcbd119f6ee08eb412783cef4d9aa651936e17fb4e9a22ce88e",
+      "Assets/Swarm/SearchExperiment.cs": "acffd0730cff4bfa5043172d3a4b2f5ac505d1af5288ffe136d8a2e51943ce95",
+      "Assets/Swarm/Simulation.cs": "1b2a9731a6fa322f2a353fb7a9ec593374c4e4f0a895bed31c180007e90c337d",
+      "Assets/Swarm/SimulationRunner.cs": "270685c3021832ec82ebe6994bf41f79094d85f303ade0ebb176b4b61e8fc924",
+      "Assets/Swarm/Tests/LocalInterpreterTests.cs": "d3ff4077d029e8ab64cb33a9d8cefb906a188dcf4d97dee3726c35a59c6c7b03",
+      "Assets/Swarm/Tests/MissionJsonTests.cs": "2484f9a2cdfdf02f54195da900db7e26236fd1e87188eb7baa9f4dcc2fdb4f45",
+      "Assets/Swarm/Tests/SearchExperimentTests.cs": "d2c95867c516bd18ef3b97a6d309acea5a46965ade96149b3da3bf3639764ae2",
+      "Assets/Swarm/Tests/SimulationTests.cs": "4b57829b43fa4bbb1089931bb4f5e335da1b4d4e364ec2a8eb277f5395ace0f7",
+      "Experiments/results/ppo/full/47/policy.json": "140010255432b4566d9c0a378deb79cf20be8395fec4b9359a3e829699474f49",
+      "Integrations/Px4/Host/Contracts.cs": "8c875c82271c90908f0aa46b301c98eaaf0f59529a817097bb2546215c1edff4",
+      "Integrations/Px4/Host/Host.csproj": "c475158e5ea9e035f8dcb541a476381f7f7113b4edfa04003d47592a89bcc11d",
+      "Integrations/Px4/Host/LocalPlanner.cs": "0f3496b53038d3a66562160f221c391f998f27ebe67a117c2fa76d951f1cc95c",
+      "Integrations/Px4/Host/MissionHost.cs": "2effbad9856751f551824ea609ec761d3a105e986ad3f2feefbe41b3be329df7",
+      "Integrations/Px4/Host/Program.cs": "7d49c5f78553942578c41b05c0437580edb1822f2cd10a51b4cb679a20da25b0",
+      "Integrations/Px4/Host/TelemetryLedger.cs": "60e8d04798f51842c49e562d49d55452e57e26513c673c5b62f10a99c301a624",
+      "Integrations/Px4/MissionControlControl.ps1": "953d26c9e59828df47eb590cef334f73dd45a2a73ae3c34c2590a5b041fed47f",
+      "Integrations/Px4/Provision.ps1": "189f94405246c3214e1d53d387373099582e7343597f7d0c6d2a1da1f835384a",
+      "Integrations/Px4/Run.ps1": "2acd5c4ff9971c97f31810609f872ff36fdf13a04247e74d131d4a48c00b646d",
+      "Integrations/Px4/Verify.ps1": "3e8382b07673cebf244ea3c59b6c0ebcf9cc309dd48ced56cff96e91e03d704a",
+      "Integrations/Px4/acceptance-result.json": "1906d965dd77a06eb1e30d342a76f6f697d116f285b71e6c43bafc854bca487a",
+      "Integrations/Px4/acceptance.py": "29eaa413156b46c6ed2a089c3dfbc3d18392dc45bef99060ca314fbaea2efe08",
+      "Integrations/Px4/batch.py": "f1d9c7335c656d4578096a6a5f435f44b2e7b9906c0a17afb9a636aefcbe7ab2",
+      "Integrations/Px4/bridge.py": "e893cac94da74c2512e7f24a0e81744795d71c56d27b0c78d2f46bbc568096ba",
+      "Integrations/Px4/camera_capture.cpp": "0bb7b52fbf72751a4d8ea485943fc3bda1b8708d79558c78386cce1a1d43000d",
+      "Integrations/Px4/inspection.json": "b3b0a5394e6ca7ca89b7dcf095eb43fb337dae9a867cee071fd0211371749e97",
+      "Integrations/Px4/paired_analysis.py": "9ef29b0fba1aac5f39c835e90965f1378a42f92bfe8c161b54b165402af2edfc",
+      "Integrations/Px4/test_batch.py": "efbf30f04637b22c829bc4dd1690f9a114e297255020d787f8a1bf0d17c59b70",
+      "Integrations/Px4/test_bridge.py": "ea359c2a79c6b44618cda128d1bd438a02abeb1e69617dc65b3d16f73045ce50"
+    }
+  },
+  "trials": [
+    {
+      "seed": 100003,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100003-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100003,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100003-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100003,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100003-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100004,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100004-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100004,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100004-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100004,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100004-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100005,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100005-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100005,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100005-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100005,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100005-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100006,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100006-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100006,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100006-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100006,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100006-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100007,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100007-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100007,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100007-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100007,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100007-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100008,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100008-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100008,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100008-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100008,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100008-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100009,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100009-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100009,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100009-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100009,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100009-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100010,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100010-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100010,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100010-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100010,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100010-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100011,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100011-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100011,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100011-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100011,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100011-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100012,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100012-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100012,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100012-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100012,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100012-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100013,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100013-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100013,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100013-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100013,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100013-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100014,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100014-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100014,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100014-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100014,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100014-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100015,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100015-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100015,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100015-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100015,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100015-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100016,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100016-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100016,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100016-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100016,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100016-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100017,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100017-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100017,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100017-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100017,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100017-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100018,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100018-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100018,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100018-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100018,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100018-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100019,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100019-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100019,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100019-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100019,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100019-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100020,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100020-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100020,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100020-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100020,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100020-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100021,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100021-0-A",
+      "exitCode": 0
+    },
+    {
+      "seed": 100021,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100021-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100021,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100021-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100022,
+      "repeat": 0,
+      "strategy": "B",
+      "run": "slice-100022-0-B",
+      "exitCode": 0
+    },
+    {
+      "seed": 100022,
+      "repeat": 0,
+      "strategy": "PPO",
+      "run": "slice-100022-0-PPO",
+      "exitCode": 0
+    },
+    {
+      "seed": 100022,
+      "repeat": 0,
+      "strategy": "A",
+      "run": "slice-100022-0-A",
+      "exitCode": 0
+    }
+  ]
+}

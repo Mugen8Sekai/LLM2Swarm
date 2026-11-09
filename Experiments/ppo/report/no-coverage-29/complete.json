@@ -1,0 +1,22 @@
+{
+  "seed": 29,
+  "steps": 262144,
+  "episodes": 6690,
+  "selectedStep": 196608,
+  "initial": {
+    "success": 0.7916666666666666,
+    "restrictedTime": 41.61562541523017,
+    "episodes": 96
+  },
+  "selectedSuccess": 0.8645833333333334,
+  "selectedRestrictedTime": 35.26354207106245,
+  "wallSeconds": 81.33059939999657,
+  "rolloutSeconds": 61.235884300025646,
+  "updateSeconds": 13.66878110000107,
+  "validationSeconds": 5.504115699986869,
+  "trainingTransitionsPerSecond": 3499.701902411896,
+  "parentCpuSeconds": 61.515625,
+  "environmentCpuSeconds": 21.625,
+  "peakCombinedRssBytes": 979730432,
+  "gpuUsed": false
+}

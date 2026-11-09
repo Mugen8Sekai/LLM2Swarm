@@ -1,0 +1,94 @@
+{
+  "accepted": true,
+  "runId": "4a6d45dc6b35a997",
+  "frames": 1776,
+  "tasksByVehicle": [
+    6,
+    6,
+    6
+  ],
+  "completedByVehicle": [
+    5,
+    5,
+    5
+  ],
+  "reason": "deadline",
+  "metrics": {
+    "finishReason": "deadline",
+    "success": false,
+    "seconds": 120.05600000000001,
+    "coverage": 0.8058333333333333,
+    "foundFraction": 0.9166666666666666,
+    "totalDistance": 595.4518950410957,
+    "exposureAreaSeconds": 9763.584000009098,
+    "redundantAreaSeconds": 9631.776000009519,
+    "firstFindingSeconds": 4.131999999999998,
+    "kFindingSeconds": null,
+    "found": 11,
+    "distanceByDrone": [
+      188.92407605301264,
+      198.71542452333367,
+      207.81239446474927
+    ],
+    "newAreaByDrone": [
+      487.0,
+      703.0,
+      744.0
+    ],
+    "findingsByDrone": [
+      3,
+      4,
+      4
+    ]
+  },
+  "snapshotPublishErrors": 0,
+  "cameras": {
+    "count": 3,
+    "format": "JPEG",
+    "resolution": [
+      640,
+      480
+    ],
+    "maxFps": 5
+  },
+  "decoupling": {
+    "run": "slice-20260917-152857",
+    "unityTargetFps": 1,
+    "unityPid": 32464,
+    "unityClosed": true,
+    "cameraVehicle": 1,
+    "cameraPid": 41318,
+    "cameraSuspendedSeconds": 5,
+    "snapshotSequenceBefore": 624,
+    "snapshotSequenceDuring": 683,
+    "snapshotSequenceAfter": 719,
+    "missionSecondsBefore": 41.948,
+    "missionSecondsDuring": 46.1,
+    "missionSecondsAfter": 48.571999999999996,
+    "frameUnchangedWhileSuspended": true,
+    "frameResumed": true
+  },
+  "artifactDirectory": "Integrations/Px4/.runtime/slice-20260917-152857",
+  "launcher": {
+    "hasExited": true,
+    "exitCode": 0
+  },
+  "supervisor": {
+    "completed": true,
+    "error": null
+  },
+  "frozenHashesVerified": 25,
+  "sourceHashesAtAcceptance": {
+    "Assets/Swarm/Px4MissionControl.cs": "2c9d9596c8c8607c1344aee38a240d9bd680d17678f1af8cd81803115eed63c7",
+    "Assets/Swarm/SimulationRunner.cs": "606b2721f2cf519463c1d3d5f530474c78cc84e17d99cc3906c490796505c292",
+    "Integrations/Px4/camera_capture.cpp": "0bb7b52fbf72751a4d8ea485943fc3bda1b8708d79558c78386cce1a1d43000d",
+    "Integrations/Px4/bridge.py": "1e73c4ca226b3b635b58f8f0c16941218761008ad9e0db1b9531cfa38fb65a61",
+    "Integrations/Px4/Run.ps1": "74a9d9ada54d106a4711e2286ebdc0afc559961615c759f33eaa7250682e0ec5",
+    "Integrations/Px4/Host/Contracts.cs": "8c875c82271c90908f0aa46b301c98eaaf0f59529a817097bb2546215c1edff4",
+    "Integrations/Px4/Host/MissionHost.cs": "6fcc17a3eb7b4d72d56fa57ac314e0cae80bed44ca7f36ede3a5cc4c4c235ef3",
+    "Integrations/Px4/models/mono_cam/model.sdf": "66d7b3e721c02e5c664a7d5cd82088fbf20a8cfb86568326d98dcbeba4f001f0",
+    "Integrations/Px4/acceptance.py": "14290ad5d1195ed269340f1e7c4ed72db4b6b430b3a2c482d35a8eef72d19c53",
+    "Integrations/Px4/README.md": "d237442d0c35b0a6f0f334f7e2be4d199a9ff34f0af42bc3c6e37fb387f70387",
+    "Integrations/Px4/MISSION_CONTROL_REPORT.md": "58f61b67451f4b514f6a893ff61219329a2961f2b4da0bccd615424d98cd6713"
+  }
+}

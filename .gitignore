@@ -112,3 +112,6 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Hand-written test harness, not a Unity-generated project file
+!/Tests/SimulationChecks/SimulationChecks.csproj

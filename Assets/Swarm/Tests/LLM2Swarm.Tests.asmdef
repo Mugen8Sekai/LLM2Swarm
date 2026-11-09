@@ -1,0 +1,8 @@
+{
+    "name": "LLM2Swarm.Tests",
+    "references": ["LLM2Swarm"],
+    "includePlatforms": ["Editor"],
+    "overrideReferences": true,
+    "precompiledReferences": ["nunit.framework.dll", "Newtonsoft.Json.dll"],
+    "optionalUnityReferences": ["TestAssemblies"]
+}

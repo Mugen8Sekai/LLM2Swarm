@@ -1,0 +1,1043 @@
+[
+  {
+    "run": "20260916-073343",
+    "summary": {
+      "passed": 20,
+      "total": 30,
+      "accuracy": 0.6666666666666666
+    },
+    "meanSeconds": 2.3441246499999995,
+    "minimumSeconds": 2.1659009,
+    "maximumSeconds": 2.4992851,
+    "results": [
+      {
+        "text": "Busca seis objetivos en dos minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **6 objetivos** en un límite de tiempo de **120 segundos** (2 minutos). Las zonas asignadas son **[all]**.",
+          "mission": {
+            "requiredFindings": 6,
+            "maxSeconds": 120.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3708307
+      },
+      {
+        "text": "Busca primero en el norte y después el resto. Termina al encontrar seis objetivos o pasar dos minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita buscar objetivos priorizando el área **north** y luego las zonas restantes (**center**, **south**). Se busca un total de **6 objetivos distintos** dentro de un límite temporal de **120 segundos** (2 minutos).",
+          "mission": {
+            "requiredFindings": 6,
+            "maxSeconds": 120.0,
+            "areas": [
+              "north",
+              "center",
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4406555
+      },
+      {
+        "text": "Busca solo en el norte hasta encontrar dos objetos, como máximo 90 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita realizar la búsqueda en la zona **north** para encontrar **2 objetivos distintos** dentro de un límite de tiempo de **90 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 90.0,
+            "areas": [
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3788619
+      },
+      {
+        "text": "Encuentra tres objetivos por abajo en un máximo de 60 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **3 objetivos** en la zona **south** (tercio inferior) con un límite de tiempo de **60 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 3,
+            "maxSeconds": 60.0,
+            "areas": [
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3465143
+      },
+      {
+        "text": "Busca cuatro objetivos en el centro. Límite de tres minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **4 objetivos** en la zona **center** con un límite de tiempo de **180 segundos** (3 minutos). Predeterminados: 12 objetivos y 600 segundos.",
+          "mission": {
+            "requiredFindings": 4,
+            "maxSeconds": 180.0,
+            "areas": [
+              "center"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3771052
+      },
+      {
+        "text": "Busca cinco objetivos por toda la región; tienes cinco minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **5 objetivos** en toda la región (*all*) dentro de un límite de **5 minutos (300 segundos)**.",
+          "mission": {
+            "requiredFindings": 5,
+            "maxSeconds": 300.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.289482
+      },
+      {
+        "text": "Empieza por el sur y luego el resto, busca ocho objetivos y no superes 240 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita iniciar la fase en el tercio inferior (sur) y luego continuar con el resto de la región (center y north), buscando un total de **8 objetivos distintos** dentro de un límite de tiempo de **240 segundos** (4 minutos).",
+          "mission": {
+            "requiredFindings": 8,
+            "maxSeconds": 240.0,
+            "areas": [
+              "south",
+              "center",
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.434569
+      },
+      {
+        "text": "Encuentra dos objetivos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **2 objetivos** (requisito predeterminado: 12 objetivos) en un tiempo máximo de **600 segundos** (predeterminado: 60 minutos). ¿Se debe priorizar alguna zona específica (ej. norte, centro, sur) o se aplica a toda la región?",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 600.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4429479
+      },
+      {
+        "text": "Busca objetivos en el norte.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita realizar la búsqueda de objetivos en la zona **north** con los parámetros predeterminados: **12 objetivos** y un límite de tiempo de **600 segundos** (10 minutos).",
+          "mission": {
+            "requiredFindings": 12,
+            "maxSeconds": 600.0,
+            "areas": [
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.416434
+      },
+      {
+        "text": "Rastrea el centro y luego el norte hasta hallar siete objetos, con límite de 200 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **7 objetivos** en el orden de zonas **center → north** con un límite de tiempo de **200 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 7,
+            "maxSeconds": 200.0,
+            "areas": [
+              "center",
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3961466
+      },
+      {
+        "text": "Busca primero arriba y luego el resto, hasta encontrar seis.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita buscar objetivos priorizando la zona **north** (tercio superior) y luego las zonas **center** y **south** (tercio central e inferior) para cumplir con **6 objetivos distintos** en un límite de tiempo predeterminado (12 objetivos en **600 segundos**). ¿Confirma esta configuración?",
+          "mission": {
+            "requiredFindings": 6,
+            "maxSeconds": 600.0,
+            "areas": [
+              "north",
+              "center",
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4888613
+      },
+      {
+        "text": "Encuentra veinte objetivos en el mapa completo en diez minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **20 objetivos** en la zona **all** (todo el mapa) dentro de un límite de **10 minutos (600 segundos)**.",
+          "mission": {
+            "requiredFindings": 20,
+            "maxSeconds": 600.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3389647
+      },
+      {
+        "text": "Busca un objetivo en el sur en medio minuto.",
+        "expected": "proposal",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a buscar **un solo objetivo** en el tercio inferior (sur) del escenario durante **60 segundos**?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.1659009
+      },
+      {
+        "text": "Busca dos objetivos en el norte y después en el sur, con máximo 80 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita encontrar **2 objetivos** en la zona **north** y luego en **south**, con un límite de tiempo de **80 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 80.0,
+            "areas": [
+              "north",
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3929654
+      },
+      {
+        "text": "Busca cerca del punto importante.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué zona específica se debe priorizar para buscar cerca del punto importante? ¿Se refiere a **north**, **center**, **south**, o **all**? También, ¿debería incluirse una fase adicional para esa zona o se aplica a una de las áreas ya definidas en la misión actual? Aclara si hay un **requiredFindings** específico o si se mantiene el valor predeterminado (12 objetivos) y el **maxSeconds** (600 segundos).",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4992851
+      },
+      {
+        "text": "Busca solo en el norte y después explora el sur.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se debe priorizar primero el área **north** (tercio superior) y luego el área **south** (tercio inferior) con los objetivos ocultos en ambas zonas? Asegúrate de que el número de objetivos a encontrar (**requiredFindings**) y el límite de tiempo (**maxSeconds**) sean válidos (ej: `requiredFindings=8, maxSeconds=450`).",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4272365
+      },
+      {
+        "text": "Busca menos uno objetivos.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a **requiredFindings = 1** (un solo objetivo) o hay otro detalle adicional (ej. zonas específicas, tiempo límite)? Los valores predeterminados son **12 objetivos** y **600 segundos**.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2960555
+      },
+      {
+        "text": "Busca objetivos en el bosque.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué zonas específicas del bosque debe explorar? ¿Y qué cantidad de objetivos distintos (**requiredFindings**) y tiempo máximo (**maxSeconds**) desea? Los valores predeterminados son **12 objetivos** y **600 segundos** (10 minutos). Si no se especifica, se usarán estos por defecto.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3499219
+      },
+      {
+        "text": "Hola, buenos días.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Cuál es la zona específica para esta misión (ej: all, north, center, south) y qué parámetros adicionales se deben considerar (ej: número de objetivos a encontrar, tiempo máximo)?",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2452847
+      },
+      {
+        "text": "Busca varios objetos rápidamente.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Cuántos objetivos distintos debe encontrar (requiredFindings) y qué tiempo máximo (maxSeconds) se permite? Los valores predeterminados son **12 objetivos** y **600 segundos** (10 minutos). Si no se especifica, se usarán estos por defecto.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3247496
+      },
+      {
+        "text": "Haz que el dron con cámara térmica busque dos objetivos.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "proposal",
+          "message": "Se solicita una misión de búsqueda con los parámetros predeterminados: encontrar **2 objetivos** en un tiempo máximo de **600 segundos** (10 minutos) en toda la región (all). ¿Se debe ajustar alguna zona o parámetro?",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 600.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": false,
+        "elapsedSeconds": 2.4336385
+      },
+      {
+        "text": "Busca seis objetivos a 50 metros de altura.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a buscar objetivos en una zona específica (ej. **north**, **center**, **south**, o **all**)? ¿O solo se solicita cobertura general sin restricción de área?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.1942846
+      },
+      {
+        "text": "Busca dos objetivos a 10 metros por segundo.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a una velocidad máxima de **10 m/s** para los drones o a un umbral de distancia de búsqueda (ej. 10 m de alcance sensor)? También, ¿debería priorizarse alguna zona específica (ej. solo *north*, *center*, o *south*)?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.3351824
+      },
+      {
+        "text": "Añade un cuarto dron y busca seis objetivos.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "El esquema de capacidades solo permite **tres drones homogéneos** (no cuatro). No se puede modificar el número de drones durante la ejecución.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1825787
+      },
+      {
+        "text": "Busca dos objetivos evitando cruzar el centro.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a buscar **solo en el norte** (evitando el centro y el sur) o a buscar **en el norte primero y luego en el sur** (evitando el centro en ambas fases)?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.2662151
+      },
+      {
+        "text": "Cubre el 90 por ciento del norte y después busca en el sur.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué cantidad de objetivos distintos se debe encontrar en total (requiredFindings)? ¿Y qué es el límite de tiempo máximo (maxSeconds)? Las zonas propuestas no son válidas para esta misión (solo se permite buscar objetivos en áreas específicas).",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.2679251
+      },
+      {
+        "text": "Busca durante dos minutos y termina, sin condición de cantidad de objetivos.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a buscar objetivos **sin límite cuantitativo** (cualquier cantidad) durante **120 segundos** (2 minutos) en qué zonas? Si es así, especifica si debe priorizarse **north** o **south** primero (o si es [all]). Si no, acláralo.",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.3646305
+      },
+      {
+        "text": "Durante la ejecución cambia las rutas cuando aparezca un objetivo.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a que los drones deben ajustar sus rutas en tiempo real al detectar objetivos adicionales durante la ejecución de la misión (sin cambiar las zonas asignadas ni las capacidades predefinidas)? Si es así, ¿debe priorizarse la cobertura de nuevos objetivos o mantenerse la estructura inicial de áreas?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.3719878
+      },
+      {
+        "text": "Busca objetivos móviles.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué objetivos son móviles? ¿Debo considerar solo objetivos estáticos como los descritos en las reglas actuales? ¿Hay algún parámetro adicional para definir su movimiento o ubicación temporal?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.2157975
+      },
+      {
+        "text": "Busca dos objetivos y vuelve a la base.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Se refiere a buscar **solo en una zona específica** (ej. norte, centro o sur) o a cubrir **toda la región** (all)? También, ¿debería priorizarse alguna zona en particular (ej. primero norte y luego el resto) o no hay preferencia?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.2687266
+      }
+    ]
+  },
+  {
+    "run": "20260916-073555",
+    "summary": {
+      "passed": 30,
+      "total": 30,
+      "accuracy": 1.0
+    },
+    "meanSeconds": 2.29421009,
+    "minimumSeconds": 2.1051321,
+    "maximumSeconds": 2.4876496,
+    "results": [
+      {
+        "text": "Busca seis objetivos en dos minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **6 objetivos** en toda la región con límite de **120 segundos** (2 minutos).",
+          "mission": {
+            "requiredFindings": 6,
+            "maxSeconds": 120.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3946756
+      },
+      {
+        "text": "Busca primero en el norte y después el resto. Termina al encontrar seis objetivos o pasar dos minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar objetivos en el orden norte → centro → sur, con límite de **120 segundos** (2 minutos) y **6 objetivos distintos** (predeterminados: 12 hallazgos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 6,
+            "maxSeconds": 120.0,
+            "areas": [
+              "north",
+              "center",
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4876496
+      },
+      {
+        "text": "Busca solo en el norte hasta encontrar dos objetos, como máximo 90 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **2 objetivos** en el área **north** con límite de **90 segundos** (1.5 minutos).",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 90.0,
+            "areas": [
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3612102
+      },
+      {
+        "text": "Encuentra tres objetivos por abajo en un máximo de 60 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **3 objetivos** en la zona **south** con límite de **60 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 3,
+            "maxSeconds": 60.0,
+            "areas": [
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.384313
+      },
+      {
+        "text": "Busca cuatro objetivos en el centro. Límite de tres minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **4 objetivos** en el **centro** con límite de **180 segundos** (3 minutos).",
+          "mission": {
+            "requiredFindings": 4,
+            "maxSeconds": 180.0,
+            "areas": [
+              "center"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2881908
+      },
+      {
+        "text": "Busca cinco objetivos por toda la región; tienes cinco minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **5 objetivos** en toda la región con límite de **300 segundos** (5 minutos).",
+          "mission": {
+            "requiredFindings": 5,
+            "maxSeconds": 300.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3069752
+      },
+      {
+        "text": "Empieza por el sur y luego el resto, busca ocho objetivos y no superes 240 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **ocho objetivos** en el orden **sur → centro → norte** con límite de **240 segundos** (4 minutos).",
+          "mission": {
+            "requiredFindings": 8,
+            "maxSeconds": 240.0,
+            "areas": [
+              "south",
+              "center",
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4058702
+      },
+      {
+        "text": "Encuentra dos objetivos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **2 objetivos** en toda la región con límite de **600 segundos** (10 minutos).",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 600.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2328375
+      },
+      {
+        "text": "Busca objetivos en el norte.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar objetivos en el norte con los valores predeterminados: 12 objetivos y límite de 600 segundos.",
+          "mission": {
+            "requiredFindings": 12,
+            "maxSeconds": 600.0,
+            "areas": [
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3650227
+      },
+      {
+        "text": "Rastrea el centro y luego el norte hasta hallar siete objetos, con límite de 200 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **siete objetivos** en el centro primero y luego en el norte, con límite de **200 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 7,
+            "maxSeconds": 200.0,
+            "areas": [
+              "center",
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4820954
+      },
+      {
+        "text": "Busca primero arriba y luego el resto, hasta encontrar seis.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **6 objetivos** en el orden **north → center → south**, con límite de **600 segundos** (10 minutos).",
+          "mission": {
+            "requiredFindings": 6,
+            "maxSeconds": 600.0,
+            "areas": [
+              "north",
+              "center",
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4285896
+      },
+      {
+        "text": "Encuentra veinte objetivos en el mapa completo en diez minutos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **20 objetivos** en toda la región con límite de **600 segundos (10 minutos)**.",
+          "mission": {
+            "requiredFindings": 20,
+            "maxSeconds": 600.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3922775
+      },
+      {
+        "text": "Busca un objetivo en el sur en medio minuto.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **1 objetivo** en el **sur** con límite de **30 segundos** (medio minuto).",
+          "mission": {
+            "requiredFindings": 1,
+            "maxSeconds": 30.0,
+            "areas": [
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2960469
+      },
+      {
+        "text": "Busca dos objetivos en el norte y después en el sur, con máximo 80 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **2 objetivos en el norte** y luego **2 objetivos en el sur**, con límite de **80 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 80.0,
+            "areas": [
+              "north",
+              "south"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4227352
+      },
+      {
+        "text": "Busca cerca del punto importante.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué zona específica (north, center, south, o all) y cuántos objetivos (**requiredFindings**) deseas buscar cerca del punto importante? Incluye también el **límite de tiempo máximo (maxSeconds)** si lo hay (ejemplo: 'busca 5 objetivos en el centro en 120 segundos').",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3700353
+      },
+      {
+        "text": "Busca solo en el norte y después explora el sur.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Cuántos objetivos deseas encontrar en total (sumando ambas zonas) y cuál es el límite de tiempo máximo (en segundos)? Usa los predeterminados: **12 objetivos** y **600 segundos** si no se especifica.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.335713
+      },
+      {
+        "text": "Busca menos uno objetivos.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿En qué zona(s) y con qué límite de tiempo deseas buscar menos **1** objetivo?",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1860057
+      },
+      {
+        "text": "Busca objetivos en el bosque.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué zona específica del bosque (norte, centro, sur o toda la región) y cuántos objetivos distintos quieres encontrar (número exacto)?",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1715066
+      },
+      {
+        "text": "Hola, buenos días.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Cuántos objetivos deseas encontrar y en qué zonas (ejemplo: 'norte y centro' o 'solo sur')?",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2070631
+      },
+      {
+        "text": "Busca varios objetos rápidamente.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Cuántos objetivos distintos quieres encontrar y en qué zonas (ejemplo: norte, centro, sur) y qué límite de tiempo (en segundos) deseas aplicar?",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2126561
+      },
+      {
+        "text": "Haz que el dron con cámara térmica busque dos objetivos.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admiten sensores especiales como cámara térmica. Los drones solo tienen sensores ideales para objetivos estáticos.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1051321
+      },
+      {
+        "text": "Busca seis objetivos a 50 metros de altura.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "La altura de 50 metros no está soportada; los drones operan a una altura fija predeterminada.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.219205
+      },
+      {
+        "text": "Busca dos objetivos a 10 metros por segundo.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "La velocidad no puede modificarse; los drones tienen velocidad fija. Además, la altura no es configurable.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.195902
+      },
+      {
+        "text": "Añade un cuarto dron y busca seis objetivos.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admiten cuatro drones; solo se permiten tres drones homogéneos en cada misión.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1375492
+      },
+      {
+        "text": "Busca dos objetivos evitando cruzar el centro.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se permite evitar cruzar zonas específicas como el centro durante la ejecución de la misión. Las áreas deben ser explícitamente definidas en la secuencia de búsqueda (north, center, south) y no se admite restricción de tránsito.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3189315
+      },
+      {
+        "text": "Cubre el 90 por ciento del norte y después busca en el sur.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admiten condiciones de finalización por porcentaje de cobertura (90%) ni restricciones de tránsito por zonas específicas (norte/sur) en la fase de búsqueda. Solo se permiten áreas definidas por tercios predefinidos (ej. north, center, south) sin restricciones de cobertura.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3366503
+      },
+      {
+        "text": "Busca durante dos minutos y termina, sin condición de cantidad de objetivos.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admite la finalización de la misión sin especificar un número de objetivos a encontrar (requiredFindings).",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2485521
+      },
+      {
+        "text": "Durante la ejecución cambia las rutas cuando aparezca un objetivo.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se permiten cambios en las rutas durante la ejecución de la misión. Las rutas deben definirse previamente y mantenerse fijas hasta que todos los drones completen sus áreas asignadas.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2288752
+      },
+      {
+        "text": "Busca objetivos móviles.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admiten objetivos móviles; los objetivos deben ser estáticos.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1113349
+      },
+      {
+        "text": "Busca dos objetivos y vuelve a la base.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "El retorno a la base no está implementado en las capacidades del sistema.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1927012
+      }
+    ]
+  },
+  {
+    "run": "20260916-073745",
+    "summary": {
+      "passed": 9,
+      "total": 12,
+      "accuracy": 0.75
+    },
+    "meanSeconds": 2.313209833333333,
+    "minimumSeconds": 2.1945145,
+    "maximumSeconds": 2.4011267,
+    "results": [
+      {
+        "text": "Que los tres peinen la parte de arriba y luego la de en medio. Paramos a los cuatro hallazgos o al minuto y medio.",
+        "expected": "proposal",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Cuántos objetivos deseas encontrar en total (requiredFindings) y qué tiempo máximo (maxSeconds) se aplica para esta misión?",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.2610239
+      },
+      {
+        "text": "Localiza 3 objetos únicamente en la franja central; no tardes más de 45 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **3 objetivos** en la zona **center** con límite de **45 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 3,
+            "maxSeconds": 45.0,
+            "areas": [
+              "center"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.4006092
+      },
+      {
+        "text": "Quiero encontrar 11 objetos. Empieza abajo, sigue por el centro y acaba arriba. Ocho minutos como máximo.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **11 objetivos** en las zonas **south → center → north** con límite de **480 segundos (8 minutos)**.",
+          "mission": {
+            "requiredFindings": 11,
+            "maxSeconds": 480.0,
+            "areas": [
+              "south",
+              "center",
+              "north"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3639275
+      },
+      {
+        "text": "Busca 2 objetos en toda la zona, sin cambiar ni la altura ni la velocidad.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **2 objetivos** en toda la región con límite de **600 segundos** (10 minutos).",
+          "mission": {
+            "requiredFindings": 2,
+            "maxSeconds": 600.0,
+            "areas": [
+              "all"
+            ]
+          }
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3494223
+      },
+      {
+        "text": "Encuentra 1 objetivo arriba. Como mucho, un cuarto de minuto.",
+        "expected": "proposal",
+        "actual": {
+          "status": "proposal",
+          "message": "Se propone buscar **1 objetivo** en el área **north** con límite de **30 segundos** (predeterminado: 12 objetivos y 600 segundos).",
+          "mission": {
+            "requiredFindings": 1,
+            "maxSeconds": 30.0,
+            "areas": [
+              "north"
+            ]
+          }
+        },
+        "passed": false,
+        "elapsedSeconds": 2.4011267
+      },
+      {
+        "text": "Peina el mapa entero para localizar nueve objetivos en 75 segundos.",
+        "expected": "proposal",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admite la operación de 'peinar' el mapa como estrategia de búsqueda. Las capacidades soportadas son búsqueda sistemática por zonas predefinidas con objetivos estáticos.",
+          "mission": null
+        },
+        "passed": false,
+        "elapsedSeconds": 2.249316
+      },
+      {
+        "text": "Encuentra tres objetos, pero no entres en la franja del medio al desplazarte.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se permite evitar cruzar la zona central (center) durante la ejecución de la misión. Las áreas disponibles son todas las regiones (all), norte (north), centro (center) o sur (south), pero no se pueden excluir zonas durante la ruta.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3341367
+      },
+      {
+        "text": "Localiza dos personas que se están moviendo.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admiten objetivos móviles ni búsqueda de personas en movimiento. Los objetivos deben ser estáticos.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.1945145
+      },
+      {
+        "text": "Encuentra cinco y después aterriza en el origen.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se permite el aterrizaje en el origen ni cambios en la ruta durante ejecución. Solo se admite búsqueda de objetivos estáticos con sensor ideal.",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2582858
+      },
+      {
+        "text": "Primero rastrea la zona con el sensor infrarrojo y encuentra cuatro objetos.",
+        "expected": "unsupported",
+        "actual": {
+          "status": "unsupported",
+          "message": "No se admiten sensores especiales como el infrarrojo; los drones usan un sensor ideal común. Además, la zona no está identificada explícitamente (no se especifica si es norte, centro o sur).",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3279036
+      },
+      {
+        "text": "Busca tres por donde te señalé antes.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué zona específica (north, center, south o all) y el orden de prioridades de las zonas (ej. primero norte, luego centro, etc.) debes seguir para buscar los **3 objetivos**?",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.2723945
+      },
+      {
+        "text": "No salgas del norte para buscar dos objetos, pero luego busca también por abajo.",
+        "expected": "clarification",
+        "actual": {
+          "status": "clarification",
+          "message": "¿Qué zona específica (norte o sur) debe ser priorizada para buscar los dos objetivos iniciales, y cuántos objetivos adicionales se buscan en el sur? (Ejemplo: 'Solo en el norte primero, luego en el sur')",
+          "mission": null
+        },
+        "passed": true,
+        "elapsedSeconds": 2.3458573
+      }
+    ]
+  }
+]
